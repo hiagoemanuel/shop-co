@@ -13,13 +13,13 @@ export const MenuList = () => {
     <AnimatePresence>
       {menuIsOpen && (
         <motion.section
-          className="absolute top-0 left-0 z-50 min-w-full h-dvh flex sm:hidden justify-center items-center bg-cyan/5 backdrop-blur-sm"
+          className="fixed top-0 left-0 z-50 min-w-full h-dvh flex sm:hidden justify-center items-center bg-cyan/5 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
           <motion.menu
-            className="bg-white p-4 rounded-3xl"
+            className="bg-white/30 backdrop-blur-3xl p-4 rounded-3xl shadow-[0px_0px_35px_50px] shadow-white/30"
             initial={{ y: '10vh' }}
             animate={{ y: 0 }}
             exit={{ y: '-10vh' }}
