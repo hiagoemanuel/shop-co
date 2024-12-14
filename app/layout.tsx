@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import { Header } from '@/components/Header'
+import { MenuListProvider } from '@/contexts/MenuListContext'
 
 const satosho = localFont({
   src: './fonts/satoshi.woff2',
@@ -26,16 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-          rel="stylesheet"
-        />
-      </head>
       <body
-        className={`${satosho.className} ${intergralCF.variable} antialiased`}
+        className={`${satosho.className} ${intergralCF.variable} bg-white antialiased overflow-x-hidden`}
       >
-        <Header />
+        <MenuListProvider>
+          <Header />
+        </MenuListProvider>
         {children}
       </body>
     </html>
