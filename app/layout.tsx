@@ -3,6 +3,10 @@ import localFont from 'next/font/local'
 import './globals.css'
 import { Header } from '@/components/Header'
 import { MenuListProvider } from '@/contexts/MenuListContext'
+import {
+  SearchBarContext,
+  SearchBarProvider,
+} from '@/contexts/SearchBarContext'
 
 const satosho = localFont({
   src: './fonts/satoshi.woff2',
@@ -31,7 +35,9 @@ export default function RootLayout({
         className={`${satosho.className} ${intergralCF.variable} bg-white antialiased overflow-x-hidden`}
       >
         <MenuListProvider>
-          <Header />
+          <SearchBarProvider>
+            <Header />
+          </SearchBarProvider>
         </MenuListProvider>
         {children}
       </body>

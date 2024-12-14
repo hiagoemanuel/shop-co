@@ -13,7 +13,7 @@ export const MenuList = () => {
     <AnimatePresence>
       {menuIsOpen && (
         <motion.section
-          className="absolute top-0 left-0 z-50 min-w-full h-dvh flex justify-center items-center bg-cyan/5 backdrop-blur-sm"
+          className="absolute top-0 left-0 z-50 min-w-full h-dvh flex sm:hidden justify-center items-center bg-cyan/5 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
