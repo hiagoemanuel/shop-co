@@ -20,6 +20,15 @@ export default {
         green: 'var(--green)',
         red: 'var(--red)',
       },
+      keyframes: {
+        'translate-to-left': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-100%)' },
+        }
+      },
+      animation: {
+        'to-left': 'translate-to-left 10s linear infinite'
+      }
     },
   },
   plugins: [],

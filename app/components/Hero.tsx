@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const Hero = () => {
   return (
-    <section className="lg:items-center lg:gap-12 md:gap-2 bg-[#F2F0F1] flex flex-wrap justify-center mb-80">
+    <section className="lg:items-center lg:gap-12 md:gap-2 bg-[#F2F0F1] flex flex-wrap justify-center">
       <div className="lg:my-12 lg:mx-0 lg:max-w-xl lg:gap-8 md:my-10 sm:max-w-md sm:items-start max-w-[22.375rem] flex flex-col items-stretch gap-6 mx-4 mt-10">
         <h1 className="lg:text-[4rem] sm:text-5xl text-4xl font-integral-cf">
           FIND CLOTHES

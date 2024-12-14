@@ -1,9 +1,11 @@
+import { BrandsTape } from './components/BrandsTape'
 import { Hero } from './components/Hero'
 
 export default function Home() {
   return (
     <main>
       <Hero />
+      <BrandsTape />
     </main>
   )
 }

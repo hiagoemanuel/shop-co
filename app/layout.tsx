@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${satosho.className} ${intergralCF.variable} bg-white antialiased overflow-x-hidden`}
+        className={`${satosho.className} ${intergralCF.variable} bg-white antialiased overflow-x-hidden mb-80`}
       >
         <MenuListProvider>
           <SearchBarProvider>
