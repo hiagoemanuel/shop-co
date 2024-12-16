@@ -19,7 +19,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className="sticky top-0 bg-white/80 backdrop-blur-sm">
+      <div className="sticky z-40 top-0 bg-white/80 backdrop-blur-sm">
         <header className="lg:gap-10 lg:py-6 max-w-7xl mx-auto flex justify-between items-center px-4 py-5">
           <div className="flex gap-4 sm:gap-5 lg:gap-10">
             <button

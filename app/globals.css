@@ -8,13 +8,18 @@
   --cyan: #f0f0f0;
   --golden: #ffc633;
   --green: #01ab31;
-  --red: #ff3333;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-satoshi);
+}
+
+@layer components {
+  .view-all-button {
+    @apply sm:max-w-max sm:px-20 sm:mx-auto sm:text-base max-w-full block mt-6 mb-10 mx-4 p-4 text-center text-sm font-medium border border-black/10 rounded-full
+  }
 }
 
 /* For IE, Edge and Firefox */

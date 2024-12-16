@@ -18,7 +18,6 @@ export default {
         cyan: 'var(--cyan)',
         golden: 'var(--golden)',
         green: 'var(--green)',
-        red: 'var(--red)',
       },
       keyframes: {
         'translate-to-left': {
