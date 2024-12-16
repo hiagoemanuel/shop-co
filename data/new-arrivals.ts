@@ -8,7 +8,7 @@ export default [
       size: ['small', 'medium', 'large', 'x-large'],
     },
     images: {
-      main: '/new-arrivals/pictures/t-shirt-with-tape-details.jpg',
+      main: '/new-arrivals/t-shirt-with-tape-details.jpg',
       others: [],
     },
     type: 't-shirt',
@@ -26,7 +26,7 @@ export default [
       size: ['medium', 'large', 'x-large', 'xx-large'],
     },
     images: {
-      main: '/new-arrivals/pictures/skinny-fit-jeans.jpg',
+      main: '/new-arrivals/skinny-fit-jeans.jpg',
       others: [],
     },
     type: 'jeans',
@@ -44,7 +44,7 @@ export default [
       size: ['small', 'medium', 'large'],
     },
     images: {
-      main: '/new-arrivals/pictures/checkered-shirt.jpg',
+      main: '/new-arrivals/checkered-shirt.jpg',
       others: [],
     },
     type: 'shirt',
@@ -62,7 +62,7 @@ export default [
       size: ['small', 'medium', 'large'],
     },
     images: {
-      main: '/new-arrivals/pictures/sleeve-triped-t-shirt.jpg',
+      main: '/new-arrivals/sleeve-triped-t-shirt.jpg',
       others: [],
     },
     type: 't-shirt',

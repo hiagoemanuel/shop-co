@@ -36,7 +36,7 @@ export const ProductCard = (product: IProduct) => {
           <p className="md:text-2xl text-xl font-bold">
             $
             {product.discount.status
-              ? product.price - (product.discount.off * product.price) / 100
+              ? Math.floor(product.price - (product.discount.off * product.price) / 100)
               : product.price}
           </p>
           {product.discount.status && (

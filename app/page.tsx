@@ -1,6 +1,9 @@
 import { BrandsTape } from './components/BrandsTape'
 import { Hero } from './components/Hero'
-import { NewArrivals } from './components/NewArrivals'
+import { FeaturedProducts } from './components/FeaturedProducts'
+
+import newArrivals from '@/data/new-arrivals'
+import topSelling from '@/data/top-selling'
 
 export default function Home() {
   return (
@@ -8,7 +11,9 @@ export default function Home() {
       <Hero />
       <BrandsTape />
       <div className="max-w-[1440px] mx-auto">
-        <NewArrivals />
+        <FeaturedProducts title="New Arrivals" products={newArrivals} />
+        <span className="inline-block w-full border-b border-black/10" />
+        <FeaturedProducts title="Top Selling" products={topSelling} />
       </div>
     </main>
   )
