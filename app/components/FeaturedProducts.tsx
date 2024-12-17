@@ -18,7 +18,7 @@ export const FeaturedProducts = ({
           breakpoints: { '(min-width:  1280px)': { active: false } },
         }}
       >
-        <CarouselContent className="xl:justify-center xl:gap-5 mx-8 gap-4">
+        <CarouselContent className="xl:justify-center xl:gap-5 mx-8 gap-4 select-none">
           {products.map((product) => (
             <div className="abasis-1/4" key={product.product.name}>
               <ProductCard {...product} />

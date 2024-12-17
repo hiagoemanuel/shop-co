@@ -20,7 +20,7 @@ const StyleItem = ({
   background,
 }: IStyleItem) => (
   <WobbleCard
-    className="xl:h-72 bg-white w-full h-48 rounded-2xl overflow-hidden"
+    className="xl:h-72 bg-white w-full h-48 rounded-3xl"
     containerClassName={containerClassName}
   >
     <h2 className="lg:top-6 lg:left-9 lg:text-4xl absolute z-10 top-4 left-6 text-2xl font-bold">
@@ -39,7 +39,7 @@ const StyleItem = ({
 export const BrowseDressCard = () => {
   return (
     <section className="mx-4">
-      <div className="lg:px-16 px-6 rounded-2xl bg-cyan">
+      <div className="lg:px-16 px-6 rounded-3xl bg-cyan">
         <h1 className="md:text-5xl pt-10 text-[2rem] leading-9 text-center font-integral-cf">
           BROWSE BY DRESS STYLE
         </h1>

@@ -4,7 +4,8 @@ import { FeaturedProducts } from './components/FeaturedProducts'
 
 import newArrivals from '@/data/new-arrivals'
 import topSelling from '@/data/top-selling'
-import { BrowseDressCard  } from './components/BrowseDressCard'
+import { BrowseDressCard } from './components/BrowseDressCard'
+import { CustomerFeedback } from './components/CustomerFeedback'
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <span className="inline-block w-full border-b border-black/10" />
         <FeaturedProducts title="Top Selling" products={topSelling} />
         <BrowseDressCard />
+        <CustomerFeedback />
       </div>
     </main>
   )
