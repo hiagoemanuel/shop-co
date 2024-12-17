@@ -25,7 +25,8 @@
       },
       "a11y": {
         "noSvgWithoutTitle": "off",
-        "noAutofocus": "off"
+        "noAutofocus": "off",
+        "useSemanticElements": "off"
       }
     }
   },

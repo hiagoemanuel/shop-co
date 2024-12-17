@@ -3,16 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
   --cyan: #f0f0f0;
   --golden: #ffc633;
   --green: #01ab31;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
   font-family: var(--font-satoshi);
 }
 
@@ -38,4 +34,10 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--foreground);
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
 }

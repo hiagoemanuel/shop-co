@@ -1,4 +1,5 @@
 import { ProductCard } from '@/components/ProductCard'
+import { Carousel, CarouselContent } from '@/components/ui/carousel'
 import type { IProduct } from '@/types/product'
 import Link from 'next/link'
 
@@ -11,11 +12,20 @@ export const FeaturedProducts = ({
       <h1 className="md:text-5xl md:mt-16 md:mb-12 mt-12 mb-8 text-center text-4xl font-integral-cf">
         {title}
       </h1>
-      <div className="md:gap-5 px-8 flex flex-wrap gap-4 justify-center">
-        {products.map((product) => (
-          <ProductCard {...product} key={product.product.name} />
-        ))}
-      </div>
+      <Carousel
+        opts={{
+          dragFree: true,
+          breakpoints: { '(min-width:  1280px)': { active: false } },
+        }}
+      >
+        <CarouselContent className="xl:justify-center xl:gap-5 mx-8 gap-4">
+          {products.map((product) => (
+            <div className="abasis-1/4" key={product.product.name}>
+              <ProductCard {...product} />
+            </div>
+          ))}
+        </CarouselContent>
+      </Carousel>
       <Link className="view-all-button" href="/products">
         View All
       </Link>

@@ -9,7 +9,7 @@ export const ProductCard = (product: IProduct) => {
   const hasHalfStar = product.rating % 1 >= 0.5
 
   return (
-    <Link className="md:gap-4 w-min flex flex-col gap-2 hover:scale-105 transition-transform" href="/">
+    <Link className="md:gap-4 w-min flex flex-col gap-2 transition-transform" href="/">
       <div className="md:w-[18.75rem] md:h-[18.75rem] w-48 h-48 rounded-xl overflow-hidden">
         <Image
           className='w-full'
