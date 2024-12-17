@@ -4,6 +4,7 @@ import { FeaturedProducts } from './components/FeaturedProducts'
 
 import newArrivals from '@/data/new-arrivals'
 import topSelling from '@/data/top-selling'
+import { BrowseDressCard  } from './components/BrowseDressCard'
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <FeaturedProducts title="New Arrivals" products={newArrivals} />
         <span className="inline-block w-full border-b border-black/10" />
         <FeaturedProducts title="Top Selling" products={topSelling} />
+        <BrowseDressCard />
       </div>
     </main>
   )
