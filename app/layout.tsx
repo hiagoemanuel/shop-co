@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import './globals.css'
 import { Header } from '@/components/Header'
 import { MenuListProvider } from '@/contexts/MenuListContext'
 import { SearchBarProvider } from '@/contexts/SearchBarContext'
+import { Footer } from '@/components/Footer'
+import './globals.css'
 
 const satosho = localFont({
   src: './fonts/satoshi.woff2',
@@ -34,6 +35,7 @@ export default function RootLayout({
           </SearchBarProvider>
         </MenuListProvider>
         {children}
+        <Footer />
       </body>
     </html>
   )
