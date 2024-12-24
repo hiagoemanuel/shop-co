@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 
 import { MenuListContext } from '@/contexts/MenuListContext'
@@ -12,10 +12,22 @@ import { Menu } from './svgs/Menu'
 import { Search } from './svgs/Search'
 import { MenuList } from './MenuList'
 import { MobileSearchBar } from './MobileSearchBar'
+import type { Session } from 'next-auth'
+import { getSession } from 'next-auth/react'
+import Image from 'next/image'
 
 export const Header = () => {
   const { menuIsOpen, setMenuIsOpen } = useContext(MenuListContext)
   const { handleSearchBar, setHandleSearchBar } = useContext(SearchBarContext)
+  const [session, setSession] = useState<Session>()
+
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await getSession()
+      if (data) setSession(data)
+    }
+    fetch()
+  }, [])
 
   return (
     <>
@@ -82,7 +94,17 @@ export const Header = () => {
               <Cart />
             </Link>
             <Link href="/account">
-              <Account />
+              {session ? (
+                <Image
+                  className="min-w-[1.266rem] min-h-[1.266rem] m-[0.117rem] rounded-full border-2 border-black"
+                  src={session.user?.image ?? ''}
+                  width={20}
+                  height={20}
+                  alt="profile picture"
+                />
+              ) : (
+                <Account />
+              )}
             </Link>
           </nav>
         </header>
