@@ -1,0 +1,45 @@
+model Product {
+  id          String         @id @default(cuid())
+  name        String
+  description String?        @db.VarChar(148)
+  AVGrating   Float          @default(0) @map("avg_rating") // change before
+  images      String[]
+  dressStyle  DressStyleType @map("dress_style")
+  type        ProductType
+  sizes       SizesType[]
+  colors      String[]
+  price       Int            @default(0)
+  discount    Int?
+  amount      Int            @default(0)
+  reviews     Review[]
+  cart        Cart[]
+
+  @@map("product")
+}
+
+enum ProductType {
+  t_shirt
+  short
+  shirt
+  hoodie
+  jeans
+}
+
+enum DressStyleType {
+  casual
+  formal
+  party
+  gym
+}
+
+enum SizesType {
+  xx_small
+  x_small
+  small
+  medium
+  large
+  x_large
+  xx_large
+  xxx_large
+  xxxxx_large
+}

@@ -1,0 +1,14 @@
+model Review {
+  id                   String   @id @default(cuid())
+  productId            String   @map("product_id")
+  userId               String   @map("user_id")
+  clientFirstName      String   @map("client_first_name")
+  clientLastNameLetter String   @map("client_last_name_letter")
+  isVerified           Boolean  @default(false) @map("is_verified")
+  postedOn             DateTime @default(now()) @map("posted_on")
+
+  product Product @relation(fields: [productId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@map("review")
+}
