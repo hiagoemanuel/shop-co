@@ -7,7 +7,7 @@ export const GoogleButton = () => {
   return (
     <Button
       className="bg-black"
-      onClick={() => signIn('google', { callbackUrl: '/account' })}
+      onClick={() => signIn('google', { callbackUrl: '/dashboard' })}
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path

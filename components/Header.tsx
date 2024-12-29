@@ -32,7 +32,8 @@ export const Header = () => {
   return (
     <>
       <div className="sticky z-40 top-0 bg-white/80 backdrop-blur-sm">
-        <header className="lg:gap-10 lg:py-6 max-w-7xl mx-auto flex justify-between items-center px-4 py-5">
+        <header className="lg:gap-10 lg:py-6 relative max-w-7xl mx-auto flex justify-between items-center px-4 py-5">
+          <span className="xl:w-full w-11/12 h-[1px] absolute bottom-0 left-[50%] -translate-x-[50%] bg-black/10 block" />
           <div className="flex gap-4 sm:gap-5 lg:gap-10">
             <button
               className="cursor-pointer sm:hidden"
@@ -93,7 +94,7 @@ export const Header = () => {
             <Link href="/cart">
               <Cart />
             </Link>
-            <Link href="/account">
+            <Link href="/dashboard">
               {session ? (
                 <Image
                   className="min-w-[1.266rem] min-h-[1.266rem] m-[0.117rem] rounded-full border-2 border-black"

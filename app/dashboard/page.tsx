@@ -4,7 +4,6 @@ import { LogOutButton } from './components/LogOutButton'
 
 export default async function Account() {
   const session = await getServerSession()
-
   return (
     <main className="min-h-96 flex justify-center items-center">
       <div className="flex flex-col gap-3 py-8 px-4 rounded-3xl border border-black/10">

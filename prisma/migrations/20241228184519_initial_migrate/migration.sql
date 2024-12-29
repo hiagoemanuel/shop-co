@@ -1,5 +1,11 @@
 -- CreateEnum
+CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
+
+-- CreateEnum
 CREATE TYPE "ProductType" AS ENUM ('t_shirt', 'short', 'shirt', 'hoodie', 'jeans');
+
+-- CreateEnum
+CREATE TYPE "ColorsType" AS ENUM ('beige', 'black', 'blue', 'brown', 'cyan', 'gray', 'green', 'orange', 'purple', 'red', 'white', 'yellow');
 
 -- CreateEnum
 CREATE TYPE "DressStyleType" AS ENUM ('casual', 'formal', 'party', 'gym');
@@ -42,6 +48,7 @@ CREATE TABLE "user" (
     "email" TEXT,
     "email_verified" TIMESTAMP(3),
     "image" TEXT,
+    "role" "Role" NOT NULL DEFAULT 'USER',
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -57,7 +64,7 @@ CREATE TABLE "verification_token" (
 CREATE TABLE "cart" (
     "product_id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
-    "amount" INTEGER NOT NULL DEFAULT 0
+    "amount" INTEGER NOT NULL
 );
 
 -- CreateTable
@@ -70,10 +77,10 @@ CREATE TABLE "product" (
     "dress_style" "DressStyleType" NOT NULL,
     "type" "ProductType" NOT NULL,
     "sizes" "SizesType"[],
-    "colors" TEXT[],
-    "price" INTEGER NOT NULL DEFAULT 0,
+    "colors" "ColorsType"[],
+    "price" INTEGER NOT NULL,
     "discount" INTEGER,
-    "amount" INTEGER NOT NULL DEFAULT 0,
+    "amount" INTEGER NOT NULL,
 
     CONSTRAINT "product_pkey" PRIMARY KEY ("id")
 );
@@ -84,7 +91,9 @@ CREATE TABLE "review" (
     "product_id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "client_first_name" TEXT NOT NULL,
-    "client_last_name_letter" TEXT NOT NULL,
+    "client_last_name_letter" VARCHAR(2) NOT NULL,
+    "feedback" VARCHAR(232) NOT NULL,
+    "rating" DOUBLE PRECISION NOT NULL,
     "is_verified" BOOLEAN NOT NULL DEFAULT false,
     "posted_on" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

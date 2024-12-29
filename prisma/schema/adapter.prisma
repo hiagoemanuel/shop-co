@@ -34,12 +34,18 @@ model User {
   email         String?   @unique
   emailVerified DateTime? @map("email_verified")
   image         String?
+  role          Role      @default(USER)
   accounts      Account[]
   sessions      Session[]
   reviews       Review[]
   cart          Cart?
 
   @@map("user")
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model VerificationToken {

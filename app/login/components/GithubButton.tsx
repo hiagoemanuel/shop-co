@@ -7,7 +7,7 @@ export const GithubButton = () => {
   return (
     <Button
       className="bg-black"
-      onClick={() => signIn('github', { callbackUrl: '/account' })}
+      onClick={() => signIn('github', { callbackUrl: '/dashboard' })}
     >
       <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
         <path

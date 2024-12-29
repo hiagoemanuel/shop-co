@@ -1,16 +1,16 @@
 model Product {
-  id          String         @id @default(cuid())
+  id          String         @id @default(uuid())
   name        String
   description String?        @db.VarChar(148)
-  AVGrating   Float          @default(0) @map("avg_rating") // change before
+  AVGrating   Float          @default(0) @map("avg_rating")
   images      String[]
   dressStyle  DressStyleType @map("dress_style")
   type        ProductType
   sizes       SizesType[]
-  colors      String[]
-  price       Int            @default(0)
+  colors      ColorsType[]
+  price       Int
   discount    Int?
-  amount      Int            @default(0)
+  amount      Int
   reviews     Review[]
   cart        Cart[]
 
@@ -23,6 +23,21 @@ enum ProductType {
   shirt
   hoodie
   jeans
+}
+
+enum ColorsType {
+  beige
+  black
+  blue
+  brown
+  cyan
+  grey
+  green
+  orange
+  purple
+  red
+  white
+  yellow
 }
 
 enum DressStyleType {
@@ -41,5 +56,5 @@ enum SizesType {
   x_large
   xx_large
   xxx_large
-  xxxxx_large
+  xxxx_large
 }

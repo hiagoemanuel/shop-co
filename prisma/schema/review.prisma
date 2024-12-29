@@ -3,7 +3,9 @@ model Review {
   productId            String   @map("product_id")
   userId               String   @map("user_id")
   clientFirstName      String   @map("client_first_name")
-  clientLastNameLetter String   @map("client_last_name_letter")
+  clientLastNameLetter String   @map("client_last_name_letter") @db.VarChar(2)
+  feedback             String   @db.VarChar(232)
+  rating               Float
   isVerified           Boolean  @default(false) @map("is_verified")
   postedOn             DateTime @default(now()) @map("posted_on")
 
