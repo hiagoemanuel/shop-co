@@ -20,7 +20,7 @@ export const FeaturedProducts = ({
       >
         <CarouselContent className="xl:justify-center xl:gap-5 mx-8 gap-4 select-none">
           {products.map((product) => (
-            <div key={product.product.name}>
+            <div key={product.id}>
               <ProductCard {...product} />
             </div>
           ))}

@@ -1,13 +1,23 @@
+import { prisma } from '@/lib/prisma'
+
 import { BrandsTape } from './components/BrandsTape'
 import { Hero } from './components/Hero'
 import { FeaturedProducts } from './components/FeaturedProducts'
 
-import newArrivals from '@/data/new-arrivals'
-import topSelling from '@/data/top-selling'
 import { BrowseDressCard } from './components/BrowseDressCard'
 import { CustomerFeedback } from './components/CustomerFeedback'
 
-export default function Home() {
+export default async function Home() {
+  const newArrivals = await prisma.product.findMany({
+    take: 4,
+    where: { AVGrating: { gte: 4 } },
+  })
+  const topSelling = await prisma.product.findMany({
+    skip: 4,
+    take: 4,
+    where: { AVGrating: { gte: 4 } },
+  })
+
   return (
     <main>
       <Hero />

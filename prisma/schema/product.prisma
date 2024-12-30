@@ -18,7 +18,7 @@ model Product {
 }
 
 enum ProductType {
-  t_shirt
+  tShirt
   short
   shirt
   hoodie
@@ -48,13 +48,13 @@ enum DressStyleType {
 }
 
 enum SizesType {
-  xx_small
-  x_small
+  xxSmall
+  xSmall
   small
   medium
   large
-  x_large
-  xx_large
-  xxx_large
-  xxxx_large
+  xLarge
+  xxLarge
+  xxxLarge
+  xxxxLarge
 }
