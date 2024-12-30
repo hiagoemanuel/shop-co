@@ -29,7 +29,7 @@ export const FilterContainer = ({
           transition={{ type: 'keyframes' }}
         >
           <div
-            className={`${lgDevices && 'pt-5 pb-4'} sticky top-0 bg-white border-b border-black/10 flex justify-between items-center`}
+            className={`${lgDevices && 'pt-5 pb-4'} z-10 sticky top-0 bg-white border-b border-black/10 flex justify-between items-center`}
           >
             {lgDevices && <h3 className="text-xl font-bold">Filters</h3>}
             <button

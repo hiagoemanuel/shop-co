@@ -59,6 +59,13 @@ export const Filter = () => {
     { value: 'xxxx_large', label: '4X-Large' },
   ]
 
+  const productsDressStyle = [
+    { type: 'Casual', urlValue: '?dress_style=casual' },
+    { type: 'Formal', urlValue: '?dress_style=formal' },
+    { type: 'Party', urlValue: '?dress_style=party' },
+    { type: 'Gym', urlValue: '?dress_style=gym' },
+  ]
+
   return (
     <FilterContainer>
       <div>
@@ -117,9 +124,27 @@ export const Filter = () => {
           </AccordionItem>
           <AccordionItem value="item-4">
             <AccordionTrigger>Dress Style</AccordionTrigger>
-            <AccordionContent>content</AccordionContent>
+            <AccordionContent>
+              <div className="flex flex-col gap-5">
+                {productsDressStyle.map((prod) => (
+                  <Link
+                    className="text-base text-black/60 hover:text-black flex justify-between items-center"
+                    href={`?type=${prod.urlValue}`}
+                    key={prod.type}
+                  >
+                    {prod.type} <Arrow />
+                  </Link>
+                ))}
+              </div>
+            </AccordionContent>
           </AccordionItem>
         </Accordion>
+        <button
+          className="w-full p-4 rounded-full text-sm text-white font-medium text-center bg-black"
+          type="button"
+        >
+          Apply Filter
+        </button>
       </div>
     </FilterContainer>
   )
