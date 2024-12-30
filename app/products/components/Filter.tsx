@@ -10,11 +10,17 @@ import {
 import { FilterContainer } from './FilterContainer'
 import { Slider } from '@/components/ui/slider'
 import { Checkbox } from '@/components/ui/checkbox'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 
 interface IProductsColors {
   name: string
   hex: string
   arrow?: 'black' | 'white'
+}
+
+interface IProductsSizes {
+  value: string
+  label: string
 }
 
 export const Filter = () => {
@@ -39,6 +45,18 @@ export const Filter = () => {
     { name: 'red', hex: 'bg-[#FF0000]' },
     { name: 'white', hex: 'bg-[#FFFFFF]', arrow: 'black' },
     { name: 'yellow', hex: 'bg-[#FFFF00]', arrow: 'black' },
+  ]
+
+  const productsSizes: IProductsSizes[] = [
+    { value: 'xx_small', label: 'XX-Small' },
+    { value: 'x_small', label: 'X-Small' },
+    { value: 'small', label: 'Small' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'large', label: 'Large' },
+    { value: 'x_large', label: 'X-Large' },
+    { value: 'xx_large', label: 'XX-Large' },
+    { value: 'xxx_large', label: '3X-Large' },
+    { value: 'xxxx_large', label: '4X-Large' },
   ]
 
   return (
@@ -84,7 +102,18 @@ export const Filter = () => {
           </AccordionItem>
           <AccordionItem value="item-3">
             <AccordionTrigger>Size</AccordionTrigger>
-            <AccordionContent>content</AccordionContent>
+            <AccordionContent>
+              <ToggleGroup
+                className="flex justify-start flex-wrap gap-2"
+                type="multiple"
+              >
+                {productsSizes.map((size) => (
+                  <ToggleGroupItem value={size.value} key={size.value}>
+                    {size.label}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+            </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-4">
             <AccordionTrigger>Dress Style</AccordionTrigger>
