@@ -1,4 +1,4 @@
-import { ProductPath } from './components/ProductPath'
+import { ProductPath } from '../../components/ProductPath'
 
 export default function ProductLayout({
   children,
