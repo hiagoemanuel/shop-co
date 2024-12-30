@@ -8,6 +8,7 @@ import {
   AccordionContent,
 } from '@/components/ui/accordion'
 import { FilterContainer } from './FilterContainer'
+import { Slider } from '@/components/ui/slider'
 
 export const Filter = () => {
   const productsType = [
@@ -35,7 +36,15 @@ export const Filter = () => {
         <Accordion className="mt-6" type="multiple">
           <AccordionItem value="item-1">
             <AccordionTrigger>Price</AccordionTrigger>
-            <AccordionContent>content</AccordionContent>
+            <AccordionContent>
+              <Slider
+                className="mt-7 mb-8"
+                defaultValue={[50, 450]}
+                max={500}
+                step={5}
+                minStepsBetweenThumbs={20}
+              />
+            </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
             <AccordionTrigger>Colors</AccordionTrigger>
