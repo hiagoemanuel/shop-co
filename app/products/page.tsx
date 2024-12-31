@@ -1,15 +1,14 @@
 import type { CSSProperties } from 'react'
 
-import api from '@/lib/axios'
+import { prisma } from '@/lib/prisma'
 import { FilterProvider } from '@/contexts/FilterContext'
 import { FilterButton } from './components/FilterButton'
 import { Filter } from './components/Filter'
 import { ProductCard } from '@/components/ProductCard'
-import type { IProduct } from '@/types/product'
 import { ProductPagination } from './components/ProductPagination'
 
 export default async function Product() {
-  const { data: products } = await api.get<IProduct[]>('/products')
+  const products = await prisma.product.findMany()
 
   return (
     <FilterProvider>

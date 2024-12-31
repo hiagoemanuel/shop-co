@@ -20,6 +20,7 @@ export const ProductCard = (product: IProduct) => {
           alt={product.name}
           width={200}
           height={200}
+          priority
         />
       </div>
       <div className="md:gap-2 flex flex-col gap-1">
