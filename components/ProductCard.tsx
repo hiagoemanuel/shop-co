@@ -10,12 +10,12 @@ export const ProductCard = (product: IProduct) => {
 
   return (
     <Link
-      className="md:gap-4 w-min flex flex-col gap-2 transition-transform"
+      className="md:w-[18.75rem] w-48 md:gap-4 flex flex-col gap-2 transition-transform group"
       href={`/products/${product.id}`}
     >
       <div className="md:w-[18.75rem] md:h-[18.75rem] w-48 h-48 rounded-xl overflow-hidden">
         <Image
-          className="w-full -translate-y-[15%]"
+          className="w-full -translate-y-[15%] transition-transform group-hover:scale-105"
           src={product.images[0]}
           alt={product.name}
           width={200}
@@ -23,7 +23,12 @@ export const ProductCard = (product: IProduct) => {
         />
       </div>
       <div className="md:gap-2 flex flex-col gap-1">
-        <h3 className="md:text-xl text-base font-bold">{product.name}</h3>
+        <h3
+          className="md:text-xl text-base font-bold truncate"
+          title={product.name}
+        >
+          {product.name}
+        </h3>
         <div className="flex gap-3">
           <div className="flex gap-1">
             {Array.from({ length: fullStars }, (_, i) => (

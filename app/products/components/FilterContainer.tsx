@@ -13,7 +13,7 @@ export const FilterContainer = ({
 }: { children: React.ReactNode }) => {
   const { isOpen, setIsOpen } = useContext(FilterContext)
   const widthSize = useWidthSize()
-  const lgDevices = isOpen || widthSize <= 640
+  const lgDevices = isOpen || widthSize < 640
 
   return (
     (isOpen || widthSize >= 640) && (
@@ -23,7 +23,7 @@ export const FilterContainer = ({
         animate={{ opacity: 1 }}
       >
         <motion.aside
-          className={`${lgDevices ? 'sm:p-5 sm:pt-0 sm:px-6' : 'sm:p-0'} sm:overflow-y-auto sm:sticky sm:top-28 sm:border sm:rounded-3xl sm:w-auto sm:h-auto p-5 pt-0 overflow-y-scroll border-black/10 absolute bottom-0 w-full h-5/6 bg-white rounded-t-3xl`}
+          className={`${lgDevices ? 'sm:p-5 sm:pt-0 sm:px-6' : 'sm:p-0'} sm:static sm:overflow-y-auto sm:border sm:rounded-3xl sm:w-auto sm:h-auto p-5 pt-0 overflow-y-scroll border-black/10 absolute bottom-0 w-full h-5/6 bg-white rounded-t-3xl`}
           initial={{ y: lgDevices ? '100vh' : 0 }}
           animate={{ y: 0 }}
           transition={{ type: 'keyframes' }}

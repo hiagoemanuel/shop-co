@@ -1,11 +1,19 @@
+import type { CSSProperties } from 'react'
+
+import api from '@/lib/axios'
 import { FilterProvider } from '@/contexts/FilterContext'
 import { FilterButton } from './components/FilterButton'
 import { Filter } from './components/Filter'
+import { ProductCard } from '@/components/ProductCard'
+import type { IProduct } from '@/types/product'
+import { ProductPagination } from './components/ProductPagination'
 
 export default async function Product() {
+  const { data: products } = await api.get<IProduct[]>('/products')
+
   return (
-    <div className="flex gap-5">
-      <FilterProvider>
+    <FilterProvider>
+      <div className="lg:gap-5 flex gap-2">
         <Filter />
         <section className="w-full">
           <div className="sm:mb-4 mb-7 flex items-center justify-between">
@@ -17,9 +25,17 @@ export default async function Product() {
             </div>
             <FilterButton />
           </div>
-          prod list
+          <div
+            className="grid justify-evenly grid-cols-[repeat(auto-fill,var(--col-size))] md:![--col-size:18.75rem] gap-x-5 gap-y-9"
+            style={{ '--col-size': '12rem' } as CSSProperties}
+          >
+            {products.map((p) => (
+              <ProductCard {...p} key={p.id} />
+            ))}
+          </div>
+          <ProductPagination />
         </section>
-      </FilterProvider>
-    </div>
+      </div>
+    </FilterProvider>
   )
 }
