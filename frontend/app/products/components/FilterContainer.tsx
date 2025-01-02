@@ -10,7 +10,9 @@ import { useWidthSize } from '@/hooks/useWidthSize'
 
 export const FilterContainer = ({
   children,
-}: { children: React.ReactNode }) => {
+}: {
+  children: React.ReactNode
+}) => {
   const { isOpen, setIsOpen } = useContext(FilterContext)
   const widthSize = useWidthSize()
   const lgDevices = isOpen || widthSize < 640

@@ -1,6 +1,6 @@
 export const Gucci = () => (
   <svg
-  className="w-[6.837rem] h-[1.578rem] md:w-[9.75rem] md:h-[2.25rem]"
+    className="w-[6.837rem] h-[1.578rem] md:w-[9.75rem] md:h-[2.25rem]"
     width="100%"
     height="100%"
     viewBox="0 0 110 23"

@@ -1,6 +1,6 @@
 export const Prada = () => (
   <svg
-  className="w-[7.938rem] h-[1.313rem] md:w-[12.125rem] md:h-[2rem]"
+    className="w-[7.938rem] h-[1.313rem] md:w-[12.125rem] md:h-[2rem]"
     width="100%"
     height="100%"
     viewBox="0 0 127 21"
