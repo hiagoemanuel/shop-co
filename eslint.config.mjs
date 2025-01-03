@@ -13,11 +13,5 @@ export default [
   ...tseslint.configs.recommended,
   eslintConfigPrettier,
   eslintPluginPrettier,
-  {
-    ignores: ['**/.next/*', '**/dist/'],
-  },
-  {
-    files: ['/frontend'],
-    ignores: ['postcss.config.mjs', 'tailwind.config.ts'],
-  },
+  { ignores: ['**/.next/*', '**/dist/', '**/tailwind.config.ts'] },
 ]
