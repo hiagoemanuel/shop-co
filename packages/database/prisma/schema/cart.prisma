@@ -1,6 +1,10 @@
 model Cart {
-  productId String @map("product_id")
-  userId    String @unique @map("user_id")
+  productId String     @map("product_id")
+  userId    String     @unique @map("user_id")
+  name      String
+  size      SizesType
+  price     Int
+  color     ColorsType
   amount    Int
 
   product Product @relation(fields: [productId], references: [id])
