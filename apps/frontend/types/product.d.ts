@@ -4,10 +4,10 @@ export interface IProduct {
   description: string | null
   AVGrating: number
   images: string[]
-  dressStyle: DressStyleType
-  type: ProductType
-  sizes: SizesType[]
-  colors: ColorsType[]
+  dressStyle: string
+  type: string
+  sizes: string[]
+  colors: string[]
   price: number
   discount: number | null
   amount: number
