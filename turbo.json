@@ -10,5 +10,6 @@
       "cache": false
     },
     "db:generate": { "cache": false }
-  }
+  },
+  "globalEnv": ["DATABASE_URL"]
 }
