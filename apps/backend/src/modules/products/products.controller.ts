@@ -1,13 +1,21 @@
-import { Controller, Get, Query } from '@nestjs/common'
+import { Controller, Get, Query, UsePipes } from '@nestjs/common'
 import { ProductsService } from './products.service'
-import { IFilterProducts } from 'types/filter-products'
+import { ZodValidationPipe } from 'src/common/pipes/zod-validation.piper'
+import {
+  ProductFilterTransformedDto,
+  schemaProductFilter,
+} from './dto/product-filter.dto'
+import { ProductTransformPipe } from 'src/common/pipes/product-transform.piper'
 
 @Controller('products')
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
 
   @Get()
-  async products(@Query() queries: IFilterProducts) {
+  @UsePipes(new ZodValidationPipe(schemaProductFilter))
+  async products(
+    @Query(new ProductTransformPipe()) queries: ProductFilterTransformedDto,
+  ) {
     const products = await this.productsService.filter(queries)
     return products
   }
