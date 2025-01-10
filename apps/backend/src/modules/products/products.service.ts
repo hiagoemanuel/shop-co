@@ -22,7 +22,7 @@ export class ProductsService {
         where: this.whereConditions(filter),
         orderBy: this.orderByConditions(filter),
         take: perPage,
-        skip: filter.page ? filter.page * perPage - perPage : 0,
+        skip: filter.page ? (filter.page - 1) * perPage : 0,
       })
 
       return filteredProducts

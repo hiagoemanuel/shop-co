@@ -22,10 +22,12 @@ export class ProductsController {
   ) {
     const products = await this.productsService.filter(queries)
     const links = await this.paginationService.links(queries)
+    const meta = await this.paginationService.metaData(queries)
 
     return {
       data: products,
-      links: links,
+      links,
+      meta,
     }
   }
 

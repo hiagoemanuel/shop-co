@@ -4,7 +4,7 @@ import {
   InternalServerErrorException,
   Scope,
 } from '@nestjs/common'
-import { PaginationLinksDto } from './dto/pagination.dto'
+import { MetaDataDto, PaginationLinksDto } from './dto/pagination.dto'
 import { REQUEST } from '@nestjs/core'
 import { Request } from 'express'
 import { PrismaService } from 'src/services/prisma.service'
@@ -27,11 +27,11 @@ export class PaginationService {
     filter: ProductFilterTransformedDto,
   ): Promise<PaginationLinksDto> {
     try {
-      const totalProducts = await this.prismaService.product.count({
+      const productCount = await this.prismaService.product.count({
         where: this.productService.whereConditions(filter),
       })
-      const totalPages = Math.ceil(totalProducts / this.productService.perPage)
-      const currentPage = (!filter.page || filter.page <= 0) && 1
+      const totalPages = Math.ceil(productCount / this.productService.perPage)
+      const currentPage = filter.page && filter.page > 0 ? filter.page : 1
 
       return {
         first: this.createLink(1),
@@ -54,6 +54,39 @@ export class PaginationService {
       return url.href
     } else {
       return null
+    }
+  }
+
+  async metaData(filter: ProductFilterTransformedDto): Promise<MetaDataDto> {
+    const productCount = await this.prismaService.product.count({
+      where: this.productService.whereConditions(filter),
+    })
+    const totalProduct = await this.prismaService.product.findMany({
+      where: this.productService.whereConditions(filter),
+      select: { id: true },
+      take: this.productService.perPage,
+      skip: filter.page ? (filter.page - 1) * this.productService.perPage : 0,
+    })
+
+    const totalPages = Math.ceil(productCount / this.productService.perPage)
+    const currentPage = filter.page && filter.page > 0 ? filter.page : 1
+
+    const skip = filter.page
+      ? (filter.page - 1) * this.productService.perPage
+      : 0
+
+    const from = Math.min(skip + 1, productCount)
+    const to = Math.min(skip + totalProduct.length, productCount)
+
+    return {
+      path: this.url,
+      currentPage: currentPage,
+      perPage: this.productService.perPage,
+      total: productCount,
+      lastPage: totalPages,
+      from,
+      to,
+      links: [{ url: this.url, label: '1', active: true }],
     }
   }
 }
