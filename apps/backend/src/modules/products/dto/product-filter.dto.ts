@@ -26,14 +26,16 @@ export const schemaProductFilterTrasformed = z.object({
   colors: z.array(z.custom<ColorsType>()).optional(),
   size: z.array(z.custom<SizesType>()).optional(),
   style: z.custom<DressStyleType>().optional(),
-  sort: z.union([
-    z.literal('name'),
-    z.literal('-name'),
-    z.literal('price'),
-    z.literal('-price'),
-    z.literal('AVGrating'),
-    z.literal('-AVGrating'),
-  ]),
+  sort: z
+    .union([
+      z.literal('name'),
+      z.literal('-name'),
+      z.literal('price'),
+      z.literal('-price'),
+      z.literal('AVGrating'),
+      z.literal('-AVGrating'),
+    ])
+    .optional(),
 })
 export type ProductFilterTransformedDto = z.infer<
   typeof schemaProductFilterTrasformed

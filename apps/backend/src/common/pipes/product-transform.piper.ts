@@ -23,7 +23,7 @@ export class ProductTransformPipe
         price: value.price ? [range[0], range[1]] : undefined,
         colors: value.colors ? toArray(value.colors) : undefined,
         size: value.size ? toArray(value.size) : undefined,
-        style: value.size,
+        style: value.style,
         sort: value.sort,
       }
 

@@ -6,18 +6,27 @@ import {
   schemaProductFilter,
 } from './dto/product-filter.dto'
 import { ProductTransformPipe } from 'src/common/pipes/product-transform.piper'
+import { PaginationService } from './pagination.service'
 
 @Controller('products')
 export class ProductsController {
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    private paginationService: PaginationService,
+  ) {}
 
   @Get()
   @UsePipes(new ZodValidationPipe(schemaProductFilter))
-  async products(
+  async getProducts(
     @Query(new ProductTransformPipe()) queries: ProductFilterTransformedDto,
   ) {
     const products = await this.productsService.filter(queries)
-    return products
+    const links = await this.paginationService.links(queries)
+
+    return {
+      data: products,
+      links: links,
+    }
   }
 
   @Get('new-arrivals')

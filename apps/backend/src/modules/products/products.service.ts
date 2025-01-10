@@ -5,17 +5,24 @@ import { ProductFilterTransformedDto } from './dto/product-filter.dto'
 
 @Injectable()
 export class ProductsService {
+  perPage: number = 9
+
   constructor(private prisma: PrismaService) {}
 
-  async allProducts() {
-    return this.prisma.product.findMany()
+  async products(params: { skip?: number; take?: number }) {
+    const { skip, take } = params
+    return this.prisma.product.findMany({ skip, take })
   }
 
   async filter(filter: ProductFilterTransformedDto) {
+    const perPage = this.perPage
+
     try {
       const filteredProducts = await this.prisma.product.findMany({
         where: this.whereConditions(filter),
         orderBy: this.orderByConditions(filter),
+        take: perPage,
+        skip: filter.page ? filter.page * perPage - perPage : 0,
       })
 
       return filteredProducts
@@ -24,28 +31,25 @@ export class ProductsService {
     }
   }
 
-  whereConditions(
-    filter: ProductFilterTransformedDto,
-  ): Prisma.ProductWhereInput {
+  whereConditions({
+    search,
+    type,
+    colors,
+    style,
+    size,
+    price,
+  }: ProductFilterTransformedDto): Prisma.ProductWhereInput {
     return {
-      ...(filter.search && {
-        name: { contains: filter.search, mode: 'insensitive' },
-      }),
-      ...(filter.type &&
-        filter.type.length > 0 && { type: { in: filter.type } }),
-      ...(filter.colors &&
-        filter.colors.length > 0 && { colors: { hasSome: filter.colors } }),
-      ...(filter.style && { dressStyle: { equals: filter.style } }),
-      ...(filter.size &&
-        filter.size.length > 0 && { sizes: { hasSome: filter.size } }),
-      ...(filter.price &&
-        filter.price.length === 2 && {
-          price: { gte: filter.price[0], lte: filter.price[1] },
-        }),
+      ...(search && { name: { contains: search, mode: 'insensitive' } }),
+      ...(type && { type: { in: type } }),
+      ...(colors && { colors: { hasSome: colors } }),
+      ...(style && { dressStyle: { equals: style } }),
+      ...(size && { sizes: { hasSome: size } }),
+      ...(price && { price: { gte: price[0], lte: price[1] } }),
     }
   }
 
-  orderByConditions({
+  private orderByConditions({
     sort,
   }: ProductFilterTransformedDto): Prisma.ProductOrderByWithAggregationInput {
     return {
@@ -56,10 +60,5 @@ export class ProductsService {
       ...(sort === '-price' && { price: 'desc' }),
       ...(sort === '-AVGrating' && { AVGrating: 'desc' }),
     }
-  }
-
-  async products(params: { skip?: number; take?: number }) {
-    const { skip, take } = params
-    return this.prisma.product.findMany({ skip, take })
   }
 }
