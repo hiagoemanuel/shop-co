@@ -5,7 +5,7 @@ import { BrowseDressCard } from './components/BrowseDressCard'
 import { CustomerFeedback } from './components/CustomerFeedback'
 import { FeaturedProducts } from './components/FeaturedProducts'
 import api from '@/lib/axios'
-import { IProduct } from '@/types/product'
+import { IProduct } from '@/types/product-response'
 
 export default async function Home() {
   const { data: arrivals } = await api.get<IProduct[]>('products/new-arrivals')

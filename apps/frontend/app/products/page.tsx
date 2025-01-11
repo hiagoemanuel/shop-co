@@ -5,11 +5,11 @@ import { FilterProvider } from '@/contexts/FilterContext'
 import { FilterButton } from './components/FilterButton'
 import { Filter } from './components/Filter'
 import { ProductPagination } from './components/ProductPagination'
-import { IProduct } from '@/types/product'
+import { ProductResponse } from '@/types/product-response'
 import { ProductCard } from '@/components/ProductCard'
 
 export default async function Product() {
-  const { data: products } = await api.get<IProduct[]>('/products')
+  const { data: products } = await api.get<ProductResponse>('/products')
 
   return (
     <FilterProvider>
@@ -29,7 +29,7 @@ export default async function Product() {
             className="grid justify-evenly grid-cols-[repeat(auto-fill,var(--col-size))] md:![--col-size:18.75rem] gap-x-5 gap-y-9"
             style={{ '--col-size': '12rem' } as CSSProperties}
           >
-            {products.map((p) => (
+            {products.data.map((p) => (
               <ProductCard {...p} key={p.id} />
             ))}
           </div>

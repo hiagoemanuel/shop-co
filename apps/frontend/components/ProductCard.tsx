@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { IProduct } from '@/types/product'
+import type { IProduct } from '@/types/product-response'
 import Image from 'next/image'
 import { Star } from './svgs/Star'
 import { HalfStar } from './svgs/HalfStar'

@@ -1,6 +1,6 @@
 import { ProductCard } from '@/components/ProductCard'
 import { Carousel, CarouselContent } from '@/components/ui/carousel'
-import type { IProduct } from '@/types/product'
+import type { IProduct } from '@/types/product-response'
 import Link from 'next/link'
 
 export const FeaturedProducts = ({
