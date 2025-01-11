@@ -30,30 +30,34 @@ export interface IProduct {
   images: string[]
   dressStyle: 'casual' | 'formal' | 'party' | 'gym'
   type: 'tShirt' | 'short' | 'shirt' | 'hoodie' | 'jeans'
-  sizes:
-    | 'xxSmall'
-    | 'xSmall'
-    | 'small'
-    | 'medium'
-    | 'large'
-    | 'xLarge'
-    | 'xxLarge'
-    | 'xxxLarge'
-    | 'xxxxLarge'[]
-  colors:
-    | 'beige'
-    | 'black'
-    | 'blue'
-    | 'brown'
-    | 'cyan'
-    | 'grey'
-    | 'green'
-    | 'orange'
-    | 'purple'
-    | 'red'
-    | 'white'
-    | 'yellow'[]
+  sizes: ProductSizeType[]
+  colors: ProductColorType[]
   price: number
   discount: number | null
   amount: number
 }
+
+export type ProductSizeType =
+  | 'xxSmall'
+  | 'xSmall'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xLarge'
+  | 'xxLarge'
+  | 'xxxLarge'
+  | 'xxxxLarge'
+
+export type ProductColorType =
+  | 'beige'
+  | 'black'
+  | 'blue'
+  | 'brown'
+  | 'cyan'
+  | 'grey'
+  | 'green'
+  | 'orange'
+  | 'purple'
+  | 'red'
+  | 'white'
+  | 'yellow'
