@@ -38,6 +38,7 @@ export type FilterType = z.infer<typeof filterSchema>
 export const Filter = () => {
   const { setFilter } = useContext(FilterContext)
   const params = useSearchParams()
+
   const [filterValue] = useState<FilterType>(() => {
     const { price, colors, sizes } = filterSchema.parse({
       price: params
