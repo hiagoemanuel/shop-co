@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 import { Adjust } from '@/components/svgs/Adjust'
 import { Close } from '@/components/svgs/Close'
-import { FilterContext } from '@/contexts/FilterContext'
+import { FilterResponsiveContext } from '@/contexts/FilterResponsiveContext'
 import { useWidthSize } from '@/hooks/useWidthSize'
 
 export const FilterContainer = ({
@@ -13,14 +13,14 @@ export const FilterContainer = ({
 }: {
   children: React.ReactNode
 }) => {
-  const { isOpen, setIsOpen } = useContext(FilterContext)
+  const { isOpen, setIsOpen } = useContext(FilterResponsiveContext)
   const widthSize = useWidthSize()
   const lgDevices = isOpen || widthSize < 640
 
   return (
     (isOpen || widthSize >= 640) && (
       <motion.div
-        className={`${lgDevices ? 'sm:max-w-[18.438rem]' : 'sm:w-auto'} sm:static sm:bg-inherit sm:h-auto sm:z-0 w-full h-dvh fixed top-0 left-0 z-50 bg-black/20 backdrop-blur-sm`}
+        className={`${lgDevices ? 'sm:min-w-[18.438rem] sm:max-w-[18.438rem]' : 'sm:w-auto'} sm:static sm:bg-inherit sm:h-auto sm:z-0 w-full h-dvh fixed top-0 left-0 z-50 bg-black/20 backdrop-blur-sm`}
         initial={{ opacity: lgDevices ? 0 : 1 }}
         animate={{ opacity: 1 }}
       >

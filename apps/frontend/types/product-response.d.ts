@@ -6,20 +6,7 @@ export interface ProductResponse {
     next: string | null
     prev: string | null
   }
-  meta: {
-    path: string
-    currentPage: number
-    perPage: number
-    total: number
-    lastPage: number
-    from: number
-    to: number
-    links: {
-      url: string | null
-      label: string
-      active: boolean
-    }[]
-  }
+  meta: MetaDataType
 }
 
 export interface IProduct {
@@ -61,3 +48,18 @@ export type ProductColorType =
   | 'red'
   | 'white'
   | 'yellow'
+
+export type MetaDataType = {
+  path: string
+  currentPage: number
+  perPage: number
+  total: number
+  lastPage: number
+  from: number
+  to: number
+  links: {
+    url: string | null
+    label: string
+    active: boolean
+  }[]
+}

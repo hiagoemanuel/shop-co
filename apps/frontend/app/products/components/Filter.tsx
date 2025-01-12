@@ -24,27 +24,46 @@ import { useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { ProductColorType, ProductSizeType } from '@/types/product-response'
 import { SizesCheckbox } from '@/components/ui/sizes-checkbox'
+import { useContext, useState } from 'react'
+import { FilterContext } from '@/contexts/FilterContext'
+import { useSearchParams } from 'next/navigation'
 
 const filterSchema = z.object({
-  price: z.tuple([z.number(), z.number()]),
-  colors: z.array(z.custom<ProductColorType>()),
-  sizes: z.array(z.custom<ProductSizeType>()),
+  price: z.tuple([z.number(), z.number()]).default([0, 500]),
+  colors: z.array(z.custom<ProductColorType>()).default([]),
+  sizes: z.array(z.custom<ProductSizeType>()).default([]),
 })
+export type FilterType = z.infer<typeof filterSchema>
 
 export const Filter = () => {
-  const form = useForm<z.infer<typeof filterSchema>>({
-    resolver: zodResolver(filterSchema),
-    defaultValues: { price: [50, 450], colors: [], sizes: [] },
+  const { setFilter } = useContext(FilterContext)
+  const params = useSearchParams()
+  const [filterValue] = useState<FilterType>(() => {
+    const { price, colors, sizes } = filterSchema.parse({
+      price: params
+        ?.get('price')
+        ?.split('_')
+        .map((p) => Number(p)),
+      colors: params?.get('colors')?.split('_'),
+      sizes: params?.get('sizes')?.split('_'),
+    })
+
+    return { price, colors, sizes }
   })
 
-  function applyFilter(values: z.infer<typeof filterSchema>) {
-    alert(JSON.stringify(values, null, 4))
-  }
+  const form = useForm<FilterType>({
+    resolver: zodResolver(filterSchema),
+    defaultValues: {
+      price: filterValue.price,
+      colors: filterValue.colors,
+      sizes: filterValue.sizes,
+    },
+  })
 
   return (
     <FilterContainer>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(applyFilter)}>
+        <form onSubmit={form.handleSubmit(setFilter)}>
           <div className="pt-5 flex flex-col gap-5">
             {productsType.map((prod) => (
               <Link
@@ -178,7 +197,7 @@ export const Filter = () => {
                   {productsDressStyle.map((prod) => (
                     <Link
                       className="text-base text-black/60 hover:text-black flex justify-between items-center"
-                      href={`?type=${prod.urlValue}`}
+                      href={`${prod.urlValue}`}
                       key={prod.type}
                     >
                       {prod.type} <Arrow />

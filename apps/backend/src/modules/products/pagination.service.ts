@@ -14,7 +14,8 @@ export class PaginationService {
   private pagination: IUrl[]
 
   constructor(@Inject(REQUEST) private readonly req: Request) {
-    this.url = `${this.req.protocol}://${this.req.headers.host}${this.req.url}`
+    console.log(`${this.req.headers.origin}`)
+    this.url = `${this.req.headers.origin}${this.req.url}`
     this.pagination = []
   }
 

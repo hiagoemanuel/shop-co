@@ -1,11 +1,11 @@
 'use client'
 
 import { Adjust } from '@/components/svgs/Adjust'
-import { FilterContext } from '@/contexts/FilterContext'
+import { FilterResponsiveContext } from '@/contexts/FilterResponsiveContext'
 import { useContext } from 'react'
 
 export const FilterButton = () => {
-  const { setIsOpen } = useContext(FilterContext)
+  const { setIsOpen } = useContext(FilterResponsiveContext)
 
   return (
     <button
