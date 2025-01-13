@@ -3,7 +3,7 @@ import { REQUEST } from '@nestjs/core'
 import { Request } from 'express'
 
 interface IUrl {
-  url: string
+  url: string | null
   label: string
   active: boolean
 }
@@ -14,11 +14,7 @@ export class PaginationService {
   private pagination: IUrl[]
 
   constructor(@Inject(REQUEST) private readonly req: Request) {
-    if (this.req.headers.origin) {
-      this.url = `${this.req.headers.origin}${this.req.url}`
-    } else {
-      this.url = `${this.req.protocol}://${this.req.headers.host}${this.req.url}`
-    }
+    this.url = `${this.req.protocol}://${this.req.headers.host}${this.req.url}`
     this.pagination = []
   }
 
@@ -92,20 +88,22 @@ export class PaginationService {
   }
 
   private setPage(pageNumber: number, label?: string | number) {
+    const url = this.createLink(pageNumber)
+
     this.pagination = [
       ...this.pagination,
       {
-        url: this.createLink(pageNumber),
+        url: url ? url.search : null,
         label: label ? label.toString() : pageNumber.toString(),
         active: !!this.createLink(pageNumber),
       },
     ]
   }
 
-  createLink(pageNumber: number | null): string | null {
+  createLink(pageNumber: number | null): URL | null {
     if (!pageNumber) return null
     const url = new URL(this.url)
     url.searchParams.set('page', pageNumber.toString())
-    return url.href
+    return url
   }
 }

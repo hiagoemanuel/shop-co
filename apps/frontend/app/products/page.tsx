@@ -1,20 +1,32 @@
-'use client'
-
-import { useContext, type CSSProperties } from 'react'
+import { type CSSProperties } from 'react'
 
 import { FilterResponsiveProvider } from '@/contexts/FilterResponsiveContext'
 import { FilterButton } from './components/FilterButton'
 import { Filter } from './components/Filter'
 import { ProductPagination } from './components/ProductPagination'
 import { ProductCard } from '@/components/ProductCard'
-import { FilterContext } from '@/contexts/FilterContext'
+import api from '@/lib/axios'
+import { ProductResponse } from '@/types/product-response'
 
-export default function Product() {
-  const { productsData } = useContext(FilterContext)
+type ProductProps = {
+  searchParams: Promise<{
+    price: string
+    colors: string
+    size: string
+    style: string
+  }>
+}
 
-  if (!productsData) return <h1>Loading</h1>
+export default async function Product({ searchParams }: ProductProps) {
+  const { style } = await searchParams
 
-  const { data: products, meta: metaData } = productsData
+  const { data } = await api.get<ProductResponse>('/products', {
+    params: await searchParams,
+  })
+
+  if (!data) return <h1>Loading</h1>
+
+  const { data: products, meta: metaData } = data
 
   return (
     <FilterResponsiveProvider>
@@ -23,7 +35,11 @@ export default function Product() {
         <section className="w-full">
           <div className="sm:mb-4 mb-7 flex items-center justify-between">
             <div className="sm:justify-between sm:gap-0 w-full flex flex-wrap items-baseline gap-2">
-              <h2 className="sm:text-3xl text-2xl font-bold">Products</h2>
+              <h2 className="sm:text-3xl text-2xl font-bold">
+                {style
+                  ? style.charAt(0).toUpperCase() + style.slice(1)
+                  : 'Products'}
+              </h2>
               <h4 className="sm:text-base text-sm text-black/60">
                 Showing {metaData.from}-{metaData.to} of {metaData.total}{' '}
                 Products

@@ -29,6 +29,7 @@ export const WobbleCard = ({
   return (
     <Link
       href={`/products?style=${href}`}
+      onClick={() => scroll({ top: 0 })}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => {

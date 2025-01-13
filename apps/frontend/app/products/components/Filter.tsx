@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { z } from 'zod'
+import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 import { Arrow } from '@/components/svgs/Arrow'
 import {
@@ -20,13 +21,11 @@ import {
   productsSizes,
   productsType,
 } from '@/data/filter'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { ProductColorType, ProductSizeType } from '@/types/product-response'
 import { SizesCheckbox } from '@/components/ui/sizes-checkbox'
-import { useContext, useState } from 'react'
-import { FilterContext } from '@/contexts/FilterContext'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 
 const filterSchema = z.object({
   price: z.tuple([z.number(), z.number()]).default([0, 500]),
@@ -36,8 +35,9 @@ const filterSchema = z.object({
 export type FilterType = z.infer<typeof filterSchema>
 
 export const Filter = () => {
-  const { setFilter } = useContext(FilterContext)
   const params = useSearchParams()
+  const pathname = usePathname()
+  const { replace } = useRouter()
 
   const [filterValue] = useState<FilterType>(() => {
     const { price, colors, size } = filterSchema.parse({
@@ -61,10 +61,29 @@ export const Filter = () => {
     },
   })
 
+  const applyFilter: SubmitHandler<FilterType> = (filter) => {
+    const queries: (keyof FilterType)[] = ['price', 'colors', 'size']
+    const searchParams = new URLSearchParams(params)
+
+    queries.forEach((query, idx) => {
+      const value = filter[query].toString().replaceAll(',', '_')
+
+      if (value) {
+        if (value === '0_500') return searchParams.delete('price')
+        searchParams.set(queries[idx], value)
+      } else {
+        searchParams.delete(queries[idx])
+      }
+    })
+
+    searchParams.delete('page')
+    replace(`${pathname}?${searchParams.toString()}`)
+  }
+
   return (
     <FilterContainer>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(setFilter)}>
+        <form onSubmit={form.handleSubmit(applyFilter)}>
           <div className="pt-5 flex flex-col gap-5">
             {productsType.map((prod) => (
               <Link
