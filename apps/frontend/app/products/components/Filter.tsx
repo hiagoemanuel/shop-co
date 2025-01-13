@@ -31,7 +31,7 @@ import { useSearchParams } from 'next/navigation'
 const filterSchema = z.object({
   price: z.tuple([z.number(), z.number()]).default([0, 500]),
   colors: z.array(z.custom<ProductColorType>()).default([]),
-  sizes: z.array(z.custom<ProductSizeType>()).default([]),
+  size: z.array(z.custom<ProductSizeType>()).default([]),
 })
 export type FilterType = z.infer<typeof filterSchema>
 
@@ -40,16 +40,16 @@ export const Filter = () => {
   const params = useSearchParams()
 
   const [filterValue] = useState<FilterType>(() => {
-    const { price, colors, sizes } = filterSchema.parse({
+    const { price, colors, size } = filterSchema.parse({
       price: params
         ?.get('price')
         ?.split('_')
         .map((p) => Number(p)),
       colors: params?.get('colors')?.split('_'),
-      sizes: params?.get('sizes')?.split('_'),
+      size: params?.get('sizes')?.split('_'),
     })
 
-    return { price, colors, sizes }
+    return { price, colors, size }
   })
 
   const form = useForm<FilterType>({
@@ -57,7 +57,7 @@ export const Filter = () => {
     defaultValues: {
       price: filterValue.price,
       colors: filterValue.colors,
-      sizes: filterValue.sizes,
+      size: filterValue.size,
     },
   })
 
@@ -154,7 +154,7 @@ export const Filter = () => {
               <AccordionContent>
                 <FormField
                   control={form.control}
-                  name="sizes"
+                  name="size"
                   render={() => (
                     <FormItem>
                       <div className="flex justify-start flex-wrap gap-2">
@@ -162,7 +162,7 @@ export const Filter = () => {
                           <FormField
                             key={size.value}
                             control={form.control}
-                            name="sizes"
+                            name="size"
                             render={({ field }) => (
                               <SizesCheckbox
                                 label={size.label}

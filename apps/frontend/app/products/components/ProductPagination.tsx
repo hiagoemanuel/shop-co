@@ -5,6 +5,7 @@ import {
   PaginationPrevious,
   PaginationLink,
   PaginationNext,
+  PaginationEllipsis,
 } from '@/components/ui/pagination'
 import { MetaDataType } from '@/types/product-response'
 
@@ -14,24 +15,30 @@ export const ProductPagination = (metaData: MetaDataType) => {
   const pages = metaData.links.filter(
     (p) => p.label !== 'Previous' && p.label !== 'Next',
   )
+
   return (
     <Pagination className="max-w-[70rem] mt-8 pt-5 border-t border-black/10">
       <PaginationContent className="w-full justify-between">
         <PaginationItem>
-          {prevLink.active}
           <PaginationPrevious
             className="py-2 px-3 border border-black/10 rounded-lg font-medium"
-            isActive={false}
+            isActive={prevLink.active}
             href={prevLink.url ?? ''}
           />
         </PaginationItem>
         <div className="flex">
           {pages.map((link) => (
             <PaginationItem key={link.label}>
-              {link.url ? (
-                <PaginationLink href={link.url}>{link.label}</PaginationLink>
+              {link.label !== '...' ? (
+                <PaginationLink
+                  href={link.url ?? ''}
+                  isActive={true}
+                  className={`${metaData.currentPage === Number(link.label) ? 'text-black bg-cyan' : 'text-black/50'}`}
+                >
+                  {link.label}
+                </PaginationLink>
               ) : (
-                <PaginationLink isActive={false}>{link.label}</PaginationLink>
+                <PaginationEllipsis />
               )}
             </PaginationItem>
           ))}

@@ -22,6 +22,7 @@ const StyleItem = ({
   <WobbleCard
     className="xl:h-72 bg-white w-full h-48 rounded-3xl"
     containerClassName={containerClassName}
+    href={title.toLowerCase()}
   >
     <h2 className="lg:top-6 lg:left-9 lg:text-4xl absolute z-10 top-4 left-6 text-2xl font-bold">
       {title}

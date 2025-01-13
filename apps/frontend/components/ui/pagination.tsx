@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ArrowLeft, ArrowRight, MoreHorizontal } from 'lucide-react'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { type ButtonProps, buttonVariants } from '@/components/ui/button'
@@ -69,7 +69,7 @@ const PaginationPrevious = ({
     {...props}
   >
     <ArrowLeft className="h-4 w-4" />
-    <span>Previous</span>
+    <span className="hidden md:inline">Previous</span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = 'PaginationPrevious'
@@ -84,7 +84,7 @@ const PaginationNext = ({
     className={cn('gap-1 pr-2.5', className)}
     {...props}
   >
-    <span>Next</span>
+    <span className="hidden md:inline">Next</span>
     <ArrowRight className="h-4 w-4" />
   </PaginationLink>
 )
@@ -99,7 +99,7 @@ const PaginationEllipsis = ({
     className={cn('flex h-9 w-9 items-center justify-center', className)}
     {...props}
   >
-    <MoreHorizontal className="h-4 w-4" />
+    <h1 className="select-none">...</h1>
     <span className="sr-only">More pages</span>
   </span>
 )

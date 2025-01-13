@@ -20,7 +20,7 @@ export const FilterContainer = ({
   return (
     (isOpen || widthSize >= 640) && (
       <motion.div
-        className={`${lgDevices ? 'sm:min-w-[18.438rem] sm:max-w-[18.438rem]' : 'sm:w-auto'} sm:static sm:bg-inherit sm:h-auto sm:z-0 w-full h-dvh fixed top-0 left-0 z-50 bg-black/20 backdrop-blur-sm`}
+        className={`${lgDevices ? 'sm:max-w-[18.438rem]' : 'sm:w-auto'} sm:static sm:bg-inherit sm:h-auto sm:z-0 w-full h-dvh fixed top-0 left-0 z-50 bg-black/20 backdrop-blur-sm`}
         initial={{ opacity: lgDevices ? 0 : 1 }}
         animate={{ opacity: 1 }}
       >

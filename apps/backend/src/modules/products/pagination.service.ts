@@ -51,13 +51,21 @@ export class PaginationService {
     }
 
     if (currentPage > 3 && totalPages - currentPage >= 3) {
-      this.setPage(currentPage)
-      this.setPage(currentPage + 1)
+      if (currentPage === totalPages - 3) {
+        this.setPage(2)
+        this.setPage(3)
+        this.setPage(null, '...')
+        this.setPage(currentPage)
+        this.setPage(currentPage + 1)
+        this.setPage(totalPages)
+      } else {
+        this.setPage(currentPage)
+        this.setPage(currentPage + 1)
+        this.setPage(null, '...')
 
-      this.setPage(null, '...')
-
-      for (let i = 2; i >= 0; i--) {
-        this.setPage(totalPages - i)
+        for (let i = 2; i >= 0; i--) {
+          this.setPage(totalPages - i)
+        }
       }
     }
 

@@ -3,15 +3,18 @@ import type React from 'react'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 export const WobbleCard = ({
   children,
   containerClassName,
   className,
+  href,
 }: {
   children: React.ReactNode
   containerClassName?: string
   className?: string
+  href: string
 }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
@@ -20,11 +23,12 @@ export const WobbleCard = ({
     const { clientX, clientY } = event
     const rect = event.currentTarget.getBoundingClientRect()
     const x = (clientX - (rect.left + rect.width / 2)) / 20
-    const y = (clientY - (rect.top + rect.height / 2)) / 20
+    const y = (clientY - (rect.top + rect.height / 2)) / 8
     setMousePosition({ x, y })
   }
   return (
-    <motion.section
+    <Link
+      href={`/products?style=${href}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => {
@@ -61,6 +65,6 @@ export const WobbleCard = ({
           {children}
         </motion.div>
       </div>
-    </motion.section>
+    </Link>
   )
 }

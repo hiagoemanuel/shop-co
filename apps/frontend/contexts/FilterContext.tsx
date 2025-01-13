@@ -32,7 +32,7 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
   }, [url])
 
   const setFilter = (filter: FilterType) => {
-    const queries: (keyof FilterType)[] = ['price', 'colors', 'sizes']
+    const queries: (keyof FilterType)[] = ['price', 'colors', 'size']
 
     queries.forEach((query) => {
       const price = filter['price']
