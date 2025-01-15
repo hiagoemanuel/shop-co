@@ -116,7 +116,7 @@ export const Filter = () => {
                 type="button"
                 id={prod.urlValue}
                 key={prod.type}
-                {...form.register('type')}
+                name="type"
               >
                 {prod.type}{' '}
                 {form.getValues('type').includes(prod.urlValue) ? (
