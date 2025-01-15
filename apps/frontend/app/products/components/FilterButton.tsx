@@ -9,7 +9,7 @@ export const FilterButton = () => {
 
   return (
     <button
-      className="sm:hidden p-2 rounded-full bg-cyan"
+      className="sm:hidden p-2 rounded-full bg-cyan self-start"
       type="button"
       onClick={() => setIsOpen(true)}
     >

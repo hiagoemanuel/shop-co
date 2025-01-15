@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { SyntheticEvent } from 'react'
 import { z } from 'zod'
 
-import { Arrow } from '@/components/svgs/Arrow'
 import {
   Accordion,
   AccordionItem,
@@ -25,7 +24,7 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { ProductColorType, ProductSizeType } from '@/types/product-response'
 import { SizesCheckbox } from '@/components/ui/sizes-checkbox'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
-import { CheckCircle2Icon } from 'lucide-react'
+import { ChevronRight, CheckCircle2Icon } from 'lucide-react'
 
 const filterSchema = z.object({
   price: z.tuple([z.number(), z.number()]).default([0, 500]),
@@ -120,9 +119,13 @@ export const Filter = () => {
               >
                 {prod.type}{' '}
                 {form.getValues('type').includes(prod.urlValue) ? (
-                  <CheckCircle2Icon fill="black" stroke="white" />
+                  <CheckCircle2Icon
+                    width="1.25rem"
+                    fill="black"
+                    stroke="white"
+                  />
                 ) : (
-                  <Arrow />
+                  <ChevronRight width="1rem" />
                 )}{' '}
               </button>
             ))}
@@ -252,7 +255,7 @@ export const Filter = () => {
                       href={`${prod.urlValue}`}
                       key={prod.type}
                     >
-                      {prod.type} <Arrow />
+                      {prod.type} <ChevronRight width="1rem" />
                     </a>
                   ))}
                 </div>

@@ -1,4 +1,4 @@
-import { Arrow } from '@/components/svgs/Arrow'
+import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
 export default async function Cart() {
@@ -10,7 +10,7 @@ export default async function Cart() {
             <h5 className="md:text-base text-sm text-black/60 hover:text-black">
               Home
             </h5>
-            <Arrow />
+            <ChevronRight width="1rem" opacity="60%" />
           </Link>
           <Link className="flex gap-1 items-center" href="/cart">
             <h5 className="md:text-base text-sm text-black">Cart</h5>

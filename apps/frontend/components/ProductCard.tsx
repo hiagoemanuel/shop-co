@@ -10,10 +10,10 @@ export const ProductCard = (product: IProduct) => {
 
   return (
     <Link
-      className="md:w-[18.75rem] w-48 md:gap-4 flex flex-col gap-2 transition-transform group"
+      className="md:w-[18.75rem] w-[10.75rem] md:gap-4 flex flex-col gap-2 transition-transform group"
       href={`/products/${product.id}`}
     >
-      <div className="md:w-[18.75rem] md:h-[18.75rem] w-48 h-48 rounded-xl overflow-hidden">
+      <div className="md:w-[18.75rem] md:h-[18.75rem] w-[10.75rem] h-[10.75rem] rounded-xl overflow-hidden">
         <Image
           className="w-full -translate-y-[15%] transition-transform group-hover:scale-105"
           src={product.images[0]}
