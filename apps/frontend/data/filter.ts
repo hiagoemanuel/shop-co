@@ -47,6 +47,7 @@ export const productsSizes: IProductsSizes[] = [
 ] as const
 
 export const productsDressStyle = [
+  { type: 'All Products', urlValue: '/products' },
   { type: 'Casual', urlValue: '?style=casual' },
   { type: 'Formal', urlValue: '?style=formal' },
   { type: 'Party', urlValue: '?style=party' },
