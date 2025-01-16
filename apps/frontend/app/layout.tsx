@@ -4,6 +4,7 @@ import { Header } from '@/components/Header'
 import { MenuListProvider } from '@/contexts/MenuListContext'
 import { Footer } from '@/components/Footer'
 import './globals.css'
+import { Suspense } from 'react'
 
 const satosho = localFont({
   src: './fonts/satoshi.woff2',
@@ -28,11 +29,13 @@ export default function RootLayout({
       <body
         className={`${satosho.className} ${intergralCF.variable} bg-white antialiased overflow-x-hidden`}
       >
-        <MenuListProvider>
-          <Header />
-        </MenuListProvider>
-        {children}
-        <Footer />
+        <Suspense>
+          <MenuListProvider>
+            <Header />
+          </MenuListProvider>
+          {children}
+          <Footer />
+        </Suspense>
       </body>
     </html>
   )

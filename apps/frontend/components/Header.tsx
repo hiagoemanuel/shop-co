@@ -14,16 +14,22 @@ import type { Session } from 'next-auth'
 import { getSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useWidthSize } from '@/hooks/useWidthSize'
+import { Close } from './svgs/Close'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export const Header = () => {
   const { menuIsOpen, setMenuIsOpen } = useContext(MenuListContext)
+  const { register, handleSubmit } = useForm<{ search: string }>()
+  const { replace } = useRouter()
   const [handleSearchBar, setHandleSearchBar] = useState(false)
   const [session, setSession] = useState<Session>()
+  const params = useSearchParams()
   const width = useWidthSize()
   const searchBarRef = useRef<HTMLLabelElement>(null)
   const searchVariants = {
     initial: width < 1024 ? { opacity: 0, x: '-50%', originX: 'right' } : {},
-    animate: width < 1024 ? { opacity: 1, scaleX: [0.5, 1] } : {},
+    animate: width < 1024 ? { opacity: 1, scaleX: [0.5, 1] } : { x: 0 },
     exit: width < 1024 ? { opacity: 0, x: '25%' } : {},
   }
 
@@ -46,8 +52,16 @@ export const Header = () => {
     if (!searchBar?.contains(event.target as Node)) setHandleSearchBar(false)
   }
 
-  const handlerSearch = () => {
-    console.log('oi')
+  const handlerSearch: SubmitHandler<{ search: string }> = ({ search }) => {
+    const searchParams = new URLSearchParams(params)
+
+    if (search) {
+      searchParams.set('search', search)
+      searchParams.delete('page')
+    } else {
+      searchParams.delete('search')
+    }
+    replace(`/products?${searchParams.toString()}`)
   }
 
   return (
@@ -86,33 +100,43 @@ export const Header = () => {
           </div>
           <AnimatePresence>
             {(handleSearchBar || width >= 1024) && (
-              <motion.label
-                className="flex bg-cyan rounded-full items-center cursor-pointer absolute lg:static z-40 lg:z-0 top-3 left-[50%] -translate-x-1/2 w-[98.1%] lg:translate-x-0 lg:w-full"
-                htmlFor="search-bar"
-                ref={searchBarRef}
-                variants={searchVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                transition={{ duration: 0.25 }}
-              >
-                <button
-                  className="py-3 pr-3 pl-4 opacity-40"
-                  type="button"
-                  aria-label="Search Yours Products"
+              <form className="w-full" onSubmit={handleSubmit(handlerSearch)}>
+                <motion.label
+                  className="flex bg-cyan rounded-full items-center cursor-pointer absolute lg:static z-40 lg:z-0 top-3 left-[50%] -translate-x-1/2 w-[98.1%] lg:translate-x-0 lg:w-full"
+                  htmlFor="search-bar"
+                  ref={searchBarRef}
+                  variants={searchVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  transition={{ duration: 0.25 }}
                 >
-                  <Search />
-                </button>
-                <input
-                  className="grow h-full outline-none bg-transparent text-black/40 text-base"
-                  onSubmit={handlerSearch}
-                  id="search-bar"
-                  type="text"
-                  placeholder="Search for Products..."
-                  autoComplete="off"
-                  autoFocus={width < 1024}
-                />
-              </motion.label>
+                  <button
+                    className="py-3 pr-3 pl-4 opacity-40"
+                    type="button"
+                    aria-label="Search Yours Products"
+                  >
+                    <Search />
+                  </button>
+                  <input
+                    className="grow h-full outline-none bg-transparent text-black/40 text-base"
+                    id="search-bar"
+                    type="text"
+                    placeholder="Search for Products..."
+                    autoComplete="off"
+                    autoFocus={width < 1024}
+                    {...register('search')}
+                  />
+                  <button
+                    className="lg:hidden py-3 pl-3 pr-4 opacity-40"
+                    type="button"
+                    aria-label="Close Search Bar"
+                    onClick={() => setHandleSearchBar(false)}
+                  >
+                    <Close />
+                  </button>
+                </motion.label>
+              </form>
             )}
           </AnimatePresence>
           <nav className="flex justify-end gap-3">
