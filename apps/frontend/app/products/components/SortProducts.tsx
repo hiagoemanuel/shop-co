@@ -21,6 +21,8 @@ export const SortProducts = ({ sort }: { sort: string }) => {
     if (sort !== value) {
       searchParams.set('sort', value)
 
+      if (value === '-AVGrating') searchParams.delete('sort')
+
       searchParams.delete('page')
       replace(`${pathname}?${searchParams.toString()}`)
     }
@@ -28,7 +30,7 @@ export const SortProducts = ({ sort }: { sort: string }) => {
 
   return (
     <Select defaultValue={sort ?? '-AVGrating'} onValueChange={handlerSort}>
-      <SelectTrigger>
+      <SelectTrigger className="sm:w-[7.05rem] w-[6.3rem]">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

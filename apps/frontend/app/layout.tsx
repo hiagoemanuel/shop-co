@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { Header } from '@/components/Header'
 import { MenuListProvider } from '@/contexts/MenuListContext'
-import { SearchBarProvider } from '@/contexts/SearchBarContext'
 import { Footer } from '@/components/Footer'
 import './globals.css'
 
@@ -30,9 +29,7 @@ export default function RootLayout({
         className={`${satosho.className} ${intergralCF.variable} bg-white antialiased overflow-x-hidden`}
       >
         <MenuListProvider>
-          <SearchBarProvider>
-            <Header />
-          </SearchBarProvider>
+          <Header />
         </MenuListProvider>
         {children}
         <Footer />

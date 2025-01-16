@@ -1,25 +1,31 @@
 'use client'
 
 import Link from 'next/link'
-import { useContext, useEffect, useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import { MenuListContext } from '@/contexts/MenuListContext'
-import { SearchBarContext } from '@/contexts/SearchBarContext'
 import { Account } from './svgs/Account'
 import { Cart } from './svgs/Cart'
 import { Menu } from './svgs/Menu'
 import { Search } from './svgs/Search'
 import { MenuList } from './MenuList'
-import { MobileSearchBar } from './MobileSearchBar'
 import type { Session } from 'next-auth'
 import { getSession } from 'next-auth/react'
 import Image from 'next/image'
+import { useWidthSize } from '@/hooks/useWidthSize'
 
 export const Header = () => {
   const { menuIsOpen, setMenuIsOpen } = useContext(MenuListContext)
-  const { handleSearchBar, setHandleSearchBar } = useContext(SearchBarContext)
+  const [handleSearchBar, setHandleSearchBar] = useState(false)
   const [session, setSession] = useState<Session>()
+  const width = useWidthSize()
+  const searchBarRef = useRef<HTMLLabelElement>(null)
+  const searchVariants = {
+    initial: width < 1024 ? { opacity: 0, x: '-50%', originX: 'right' } : {},
+    animate: width < 1024 ? { opacity: 1, scaleX: [0.5, 1] } : {},
+    exit: width < 1024 ? { opacity: 0, x: '25%' } : {},
+  }
 
   useEffect(() => {
     const fetch = async () => {
@@ -28,6 +34,21 @@ export const Header = () => {
     }
     fetch()
   }, [])
+
+  useEffect(() => {
+    document.addEventListener('mousedown', searchBarOutSideClick)
+    return () =>
+      document.removeEventListener('mousedown', searchBarOutSideClick)
+  }, [])
+
+  const searchBarOutSideClick = (event: MouseEvent) => {
+    const searchBar = searchBarRef.current
+    if (!searchBar?.contains(event.target as Node)) setHandleSearchBar(false)
+  }
+
+  const handlerSearch = () => {
+    console.log('oi')
+  }
 
   return (
     <>
@@ -63,25 +84,37 @@ export const Header = () => {
               </Link>
             </nav>
           </div>
-          <label
-            className="hidden lg:flex w-full bg-cyan rounded-full items-center cursor-pointer"
-            htmlFor="search-bar"
-          >
-            <button
-              className="py-3 pr-3 pl-4 opacity-40"
-              type="button"
-              aria-label="Search Yours Products"
-            >
-              <Search />
-            </button>
-            <input
-              className="grow h-full outline-none bg-transparent text-black/40 text-base"
-              id="search-bar"
-              type="text"
-              placeholder="Search for Products..."
-              autoComplete="off"
-            />
-          </label>
+          <AnimatePresence>
+            {(handleSearchBar || width >= 1024) && (
+              <motion.label
+                className="flex bg-cyan rounded-full items-center cursor-pointer absolute lg:static z-40 lg:z-0 top-3 left-[50%] -translate-x-1/2 w-[98.1%] lg:translate-x-0 lg:w-full"
+                htmlFor="search-bar"
+                ref={searchBarRef}
+                variants={searchVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.25 }}
+              >
+                <button
+                  className="py-3 pr-3 pl-4 opacity-40"
+                  type="button"
+                  aria-label="Search Yours Products"
+                >
+                  <Search />
+                </button>
+                <input
+                  className="grow h-full outline-none bg-transparent text-black/40 text-base"
+                  onSubmit={handlerSearch}
+                  id="search-bar"
+                  type="text"
+                  placeholder="Search for Products..."
+                  autoComplete="off"
+                  autoFocus={width < 1024}
+                />
+              </motion.label>
+            )}
+          </AnimatePresence>
           <nav className="flex justify-end gap-3">
             <button
               className="lg:hidden"
@@ -109,9 +142,6 @@ export const Header = () => {
             </Link>
           </nav>
         </header>
-        <AnimatePresence>
-          {handleSearchBar && <MobileSearchBar />}
-        </AnimatePresence>
       </div>
       <MenuList />
     </>

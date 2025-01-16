@@ -35,7 +35,7 @@ export default async function Product({ searchParams }: ProductProps) {
       <div className="lg:gap-5 flex gap-2">
         <Filter />
         <section className="w-full">
-          <div className="sm:mb-4 mb-7 flex items-center justify-between">
+          <div className="sm:mb-4 mb-7 flex items-center justify-between gap-2">
             <div className="sm:justify-between w-full flex flex-wrap items-baseline gap-2">
               <h2 className="sm:text-3xl text-2xl font-bold">
                 {style
