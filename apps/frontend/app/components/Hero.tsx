@@ -51,8 +51,8 @@ export const Hero = () => {
           className="xl:w-[38.75rem] xl:h-auto w-[24.375rem] h-[28rem]"
           src="/models.png"
           priority
-          width={390}
-          height={448}
+          width={620}
+          height={663}
           alt="models picture"
         />
       </div>

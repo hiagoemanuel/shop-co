@@ -18,8 +18,8 @@ export const ProductCard = (product: IProduct) => {
           className="w-full -translate-y-[15%] transition-transform group-hover:scale-105"
           src={product.images[0]}
           alt={product.name}
-          width={200}
-          height={200}
+          width={1920}
+          height={2879}
           priority
         />
       </div>

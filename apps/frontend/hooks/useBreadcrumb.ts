@@ -28,6 +28,7 @@ export const useBreadcrumb = (): Breadcrumb[] => {
   }, [pathname])
 
   breadcrumb.push({ label: 'Home', url: '/' })
+  breadcrumb.push({ label: 'Products', url: '/products' })
 
   const styleParam = params.get('style')
 
@@ -36,9 +37,7 @@ export const useBreadcrumb = (): Breadcrumb[] => {
       label: formatString(styleParam),
       url: `/products/?style=${styleParam}`,
     })
-  } else if (pathname === '/products') {
-    breadcrumb.push({ label: 'All Producst', url: '/products' })
-  } else if (product) {
+  } else if (product && pathname !== '/products') {
     breadcrumb.push({
       label: formatString(product.dressStyle),
       url: `/products/?style=${product.dressStyle}`,
