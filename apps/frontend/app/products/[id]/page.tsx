@@ -1,6 +1,7 @@
 import api from '@/lib/axios'
 import { IProduct } from '@/types/product-response'
 import { ProductPreview } from './components/ProductPreview'
+import { ProductDetails } from './components/ProductDetails'
 
 type ProductIdPageProps = { params: Promise<{ id: string }> }
 
@@ -10,9 +11,9 @@ export default async function ProductIdPage({ params }: ProductIdPageProps) {
 
   return (
     <section>
-      <div>
+      <div className="lg:gap-5 lg:flex-row flex flex-col gap-5 items-center justify-center">
         <ProductPreview images={product.images} />
-        <div></div>
+        <ProductDetails {...product} />
       </div>
     </section>
   )

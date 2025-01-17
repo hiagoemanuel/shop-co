@@ -16,6 +16,10 @@ body {
   .view-all-button {
     @apply sm:max-w-max sm:px-20 sm:mx-auto sm:text-base max-w-full block mt-6 mb-10 mx-4 p-4 text-center text-sm font-medium border border-black/10 rounded-full
   }
+
+  .reset-numeric-input {
+    @apply appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none outline-none bg-transparent
+  }
 }
 
 /* For IE, Edge and Firefox */
