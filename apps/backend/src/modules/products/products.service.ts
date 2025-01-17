@@ -6,7 +6,7 @@ import {
 import { PrismaService } from 'src/services/prisma.service'
 import { ProductFilterTransformedDto } from './dto/product-filter.dto'
 import { FilterService } from './filter.service'
-import { Product } from '@prisma/client'
+import { Prisma, Product } from '@prisma/client'
 import { MetaDataDto } from './dto/pagination.dto'
 import { PaginationService } from './pagination.service'
 
@@ -43,9 +43,21 @@ export class ProductsService {
     }
   }
 
-  async products(params: { skip?: number; take?: number }) {
-    const { skip, take } = params
-    return this.prisma.product.findMany({ skip, take })
+  products(params: {
+    skip?: number
+    take?: number
+    cursor?: Prisma.ProductWhereUniqueInput
+    where?: Prisma.ProductWhereInput
+    orderBy?: Prisma.ProductOrderByWithRelationInput
+  }) {
+    const { skip, take, cursor, where, orderBy } = params
+    return this.prisma.product.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+    })
   }
 
   private async data(): Promise<Product[]> {

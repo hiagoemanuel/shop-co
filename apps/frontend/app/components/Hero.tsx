@@ -48,7 +48,7 @@ export const Hero = () => {
       </div>
       <div className="select-none self-end">
         <Image
-          className="xl:w-[38.75rem]"
+          className="xl:w-[38.75rem] xl:h-auto w-[24.375rem] h-[28rem]"
           src="/models.png"
           priority
           width={390}

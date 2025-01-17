@@ -1,32 +1,11 @@
 'use client'
 
+import { useBreadcrumb } from '@/hooks/useBreadcrumb'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
-
-interface Breadcrumb {
-  label: string
-  url: string
-}
 
 export const ProductBreadcrumb = () => {
-  const pathname = usePathname()
-  const params = useSearchParams()
-
-  const styleParam = params.get('style')
-
-  const breadcrumb: Breadcrumb[] = [
-    {
-      label: 'Home',
-      url: '/',
-    },
-    {
-      label: styleParam
-        ? styleParam.charAt(0).toUpperCase() + styleParam.slice(1)
-        : 'All Products',
-      url: styleParam ? `${pathname}?style=${styleParam}` : '/products',
-    },
-  ]
+  const breadcrumb = useBreadcrumb()
 
   return (
     <div className="md:gap-3 md:mb-6 mb-3 flex gap-2">

@@ -93,7 +93,7 @@ export const Header = () => {
               <Link className="hover:underline" href="/products">
                 New Arrivals
               </Link>
-              <Link className="hover:underline" href="/brands">
+              <Link className="hover:underline" href="/products">
                 Brands
               </Link>
             </nav>

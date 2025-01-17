@@ -8,8 +8,12 @@ import api from '@/lib/axios'
 import { IProduct } from '@/types/product-response'
 
 export default async function Home() {
-  const { data: arrivals } = await api.get<IProduct[]>('products/new-arrivals')
-  const { data: topSelling } = await api.get<IProduct[]>('products/top-selling')
+  const { data: arrivals } = await api.get<IProduct[]>(
+    'products/t/new-arrivals',
+  )
+  const { data: topSelling } = await api.get<IProduct[]>(
+    'products/t/top-selling',
+  )
 
   return (
     <main>

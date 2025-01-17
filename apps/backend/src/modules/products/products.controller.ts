@@ -1,4 +1,11 @@
-import { Controller, Get, Query, UsePipes } from '@nestjs/common'
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Param,
+  Query,
+  UsePipes,
+} from '@nestjs/common'
 import { ProductsService } from './products.service'
 import { ZodValidationPipe } from 'src/common/pipes/zod-validation.piper'
 import {
@@ -20,13 +27,28 @@ export class ProductsController {
     return productResponse
   }
 
-  @Get('new-arrivals')
+  @Get('/:id')
+  async getProduct(@Param('id') id: string) {
+    const product = await this.productsService.products({ where: { id: id } })
+
+    if (product.length === 0) {
+      throw new BadRequestException('This product does not exist')
+    } else {
+      return product[0]
+    }
+  }
+
+  @Get('/t/new-arrivals')
   newArrivals() {
     return this.productsService.products({ take: 4 })
   }
 
-  @Get('top-selling')
+  @Get('/t/top-selling')
   topSelling() {
-    return this.productsService.products({ take: 4, skip: 4 })
+    return this.productsService.products({
+      where: { AVGrating: { gte: 4.9 } },
+      orderBy: { AVGrating: 'asc' },
+      take: 4,
+    })
   }
 }
