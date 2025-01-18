@@ -11,7 +11,7 @@ export default async function ProductIdPage({ params }: ProductIdPageProps) {
 
   return (
     <section>
-      <div className="lg:gap-5 lg:flex-row flex flex-col gap-5 items-center justify-center">
+      <div className="lg:gap-5 lg:flex-row lg:justify-center lg:items-start flex flex-col gap-5 items-center">
         <ProductPreview images={product.images} />
         <ProductDetails {...product} />
       </div>

@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 import { ProductFilterTransformedDto } from './dto/product-filter.dto'
-import { retry } from 'rxjs'
 
 @Injectable()
 export class FilterService {

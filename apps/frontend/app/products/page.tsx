@@ -26,8 +26,6 @@ export default async function Product({ searchParams }: ProductProps) {
     params: await searchParams,
   })
 
-  if (!data) return <h1>Loading</h1>
-
   const { data: products, meta: metaData } = data
 
   return (

@@ -8,6 +8,16 @@ import { IProduct } from '@/types/product-response'
 import { Minus, Plus } from 'lucide-react'
 import { useState } from 'react'
 
+const formatString = (value: string): string => {
+  const formattedString = value.replace(/([a-z])([A-Z])/g, '$1-$2')
+  const parts = formattedString.split('-')
+  if (parts.length > 1) {
+    parts[0] = parts[0].toUpperCase()
+    return parts.join('-')
+  }
+  return formattedString.charAt(0).toUpperCase() + formattedString.slice(1)
+}
+
 export const ProductDetails = (product: IProduct) => {
   const [amountCart, setAmountCart] = useState(1)
   const fullStars = Math.floor(product.AVGrating)
@@ -62,11 +72,13 @@ export const ProductDetails = (product: IProduct) => {
         </div>
       </div>
       {product.description && (
-        <p className="sm:text-base mt-5 mb-6 text-sm text-black/60">
+        <p className="sm:text-base mt-5 mb-6 pb-5 text-sm text-black/60 border-b border=black/10">
           {product.description}
         </p>
       )}
-      <div className="py-6 border-y border-black/10">
+      <div
+        className={`${!product.description && 'mt-5'} pb-6 border-b border-black/10`}
+      >
         <h4 className="sm:text-base text-sm text-black/60 mb-4">
           Select Colors
         </h4>
@@ -85,7 +97,11 @@ export const ProductDetails = (product: IProduct) => {
         <h4 className="sm:text-base text-sm text-black/60 mb-4">Choose Size</h4>
         <div className="flex flex-wrap gap-3">
           {product.sizes.map((size, idx) => (
-            <SizesCheckbox key={size} label={size} defaultChecked={idx === 0} />
+            <SizesCheckbox
+              key={size}
+              label={formatString(size)}
+              defaultChecked={idx === 0}
+            />
           ))}
         </div>
       </div>

@@ -12,7 +12,7 @@ export const ProductPreview = ({ images }: ProductPreviewProps) => {
   const [currentImg, setCurrentImg] = useState(images[0])
 
   return (
-    <div className=" lg:self-start sm:flex-row sm:gap-3 flex flex-col gap-3">
+    <div className="sm:flex-row sm:gap-3 flex flex-col gap-3">
       <Lens>
         <Image
           className="sm:w-[27.75rem] sm:h-[33.125rem] h-[73.605dvw] object-cover rounded-3xl"
@@ -26,7 +26,7 @@ export const ProductPreview = ({ images }: ProductPreviewProps) => {
       <div className="sm:flex-col sm:-order-1 sm:gap-3 flex gap-3">
         {images.map((img) => (
           <button
-            className={`${currentImg === img ? 'border border-black' : ''} rounded-3xl overflow-hidden`}
+            className={`${currentImg === img ? 'border border-black' : 'border'} rounded-3xl overflow-hidden`}
             onClick={() => setCurrentImg(img)}
             key={img}
           >
