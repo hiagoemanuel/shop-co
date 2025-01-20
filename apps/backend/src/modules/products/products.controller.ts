@@ -20,7 +20,7 @@ export class ProductsController {
 
   @Get()
   @UsePipes(new ZodValidationPipe(schemaProductFilter))
-  async getProducts(
+  async findAll(
     @Query(new ProductTransformPipe()) queries: ProductFilterTransformedDto,
   ) {
     const productResponse = await this.productsService.productResponse(queries)
@@ -28,7 +28,7 @@ export class ProductsController {
   }
 
   @Get('/:id')
-  async getProduct(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     const product = await this.productsService.products({ where: { id: id } })
 
     if (product.length === 0) {
