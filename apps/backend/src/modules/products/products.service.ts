@@ -37,7 +37,7 @@ export class ProductsService {
     this.totalPages = totalPages !== 0 ? totalPages : 1
 
     return {
-      data: await this.data(),
+      data: await this.findAll(),
       links: this.links(),
       meta: await this.meta(),
     }
@@ -60,11 +60,11 @@ export class ProductsService {
     })
   }
 
-  private async data(): Promise<Product[]> {
+  async findAll(): Promise<Product[]> {
     try {
       const filteredProducts = await this.prisma.product.findMany({
-        where: this.filterService.whereConditions(this.filter),
-        orderBy: this.filterService.orderByConditions(this.filter),
+        where: this.filterService.whereConditions(this.filter ?? {}),
+        orderBy: this.filterService.orderByConditions(this.filter ?? {}),
         take: this.perPage,
         skip: this.skip,
       })
@@ -74,7 +74,7 @@ export class ProductsService {
     }
   }
 
-  private links() {
+  links() {
     return {
       first: this.paginationService.createLink(1),
       last: this.paginationService.createLink(this.totalPages),
@@ -87,10 +87,10 @@ export class ProductsService {
     }
   }
 
-  private async meta(): Promise<MetaDataDto> {
+  async meta(): Promise<MetaDataDto> {
     try {
       const totalProduct = await this.prisma.product.findMany({
-        where: this.filterService.whereConditions(this.filter),
+        where: this.filterService.whereConditions(this.filter ?? {}),
         select: { id: true },
         take: this.perPage,
         skip: this.skip,
