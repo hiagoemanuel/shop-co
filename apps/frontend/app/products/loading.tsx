@@ -8,8 +8,11 @@ export default function Loading() {
         className="sm:gap-x-5 grid justify-evenly grid-cols-[repeat(auto-fill,var(--col-size))] md:![--col-size:18.75rem] gap-x-2 gap-y-9"
         style={{ '--col-size': '10.75rem' } as CSSProperties}
       >
-        {Array.from({ length: 9 }).map(() => (
-          <div className="md:w-[18.75rem] w-[10.75rem] md:gap-4 flex flex-col gap-2 transition-transform group">
+        {Array.from({ length: 9 }).map((_, idx) => (
+          <div
+            className="md:w-[18.75rem] w-[10.75rem] md:gap-4 flex flex-col gap-2 transition-transform group"
+            key={idx}
+          >
             <Skeleton className="md:w-[18.75rem] md:h-[18.75rem] w-[10.75rem] h-[10.75rem] rounded-xl overflow-hidden" />
             <div className="md:gap-2 flex flex-col gap-1">
               <Skeleton className="w-fullmd:h-7 h-6" />

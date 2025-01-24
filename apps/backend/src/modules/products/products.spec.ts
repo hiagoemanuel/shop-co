@@ -18,10 +18,7 @@ describe('ProductsService', () => {
       providers: [
         ProductsService,
         FilterService,
-        {
-          provide: PaginationService,
-          useValue: paginationMock,
-        },
+        { provide: PaginationService, useValue: paginationMock },
         { provide: PrismaService, useValue: prismaMock },
       ],
     }).compile()
@@ -35,12 +32,12 @@ describe('ProductsService', () => {
 
     prismaMock.product.findMany.mockResolvedValueOnce(result)
 
-    const product = await productsService.findAll()
+    const product = await productsService.findAll({}, 9, 0)
     expect(product).toBe(result)
   })
 
   it('should return first, last, next and prev links', () => {
-    const links = productsService.links()
+    const links = productsService.links(4, 1)
 
     expect(links).toHaveProperty('first')
     expect(links).toHaveProperty('last')

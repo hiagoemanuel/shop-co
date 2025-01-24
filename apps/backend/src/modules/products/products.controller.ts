@@ -21,15 +21,21 @@ export class ProductsController {
   @Get()
   @UsePipes(new ZodValidationPipe(schemaProductFilter))
   async findAll(
-    @Query(new ProductTransformPipe()) queries: ProductFilterTransformedDto,
+    @Query(new ProductTransformPipe()) filter: ProductFilterTransformedDto,
   ) {
-    const productResponse = await this.productsService.productResponse(queries)
-    return productResponse
+    const meta = await this.productsService.meta(filter)
+    const skip = filter.page ? (filter.page - 1) * meta.perPage : 0
+    const data = await this.productsService.findAll(filter, meta.perPage, skip)
+    const links = this.productsService.links(meta.lastPage, meta.currentPage)
+
+    return { data, links, meta }
   }
 
   @Get('/:id')
   async findOne(@Param('id') id: string) {
-    const product = await this.productsService.products({ where: { id: id } })
+    const product = await this.productsService.findSpecific({
+      where: { id: id },
+    })
 
     if (product.length === 0) {
       throw new BadRequestException('This product does not exist')
@@ -40,12 +46,12 @@ export class ProductsController {
 
   @Get('/t/new-arrivals')
   newArrivals() {
-    return this.productsService.products({ take: 4 })
+    return this.productsService.findSpecific({ take: 4 })
   }
 
   @Get('/t/top-selling')
   topSelling() {
-    return this.productsService.products({
+    return this.productsService.findSpecific({
       where: { AVGrating: { gte: 4.9 } },
       orderBy: { AVGrating: 'asc' },
       take: 4,

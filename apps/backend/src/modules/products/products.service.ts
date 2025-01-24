@@ -12,13 +12,7 @@ import { PaginationService } from './pagination.service'
 
 @Injectable()
 export class ProductsService {
-  filter: ProductFilterTransformedDto
-
   private perPage: number = 9
-  private skip: number
-  private currentPage: number
-  private totalPages: number
-  private productCount: number
 
   constructor(
     private prisma: PrismaService,
@@ -26,24 +20,7 @@ export class ProductsService {
     private paginationService: PaginationService,
   ) {}
 
-  async productResponse(filter: ProductFilterTransformedDto) {
-    this.filter = filter
-    this.skip = this.filter.page ? (this.filter.page - 1) * this.perPage : 0
-    this.currentPage = filter.page && filter.page > 0 ? filter.page : 1
-    this.productCount = await this.prisma.product.count({
-      where: this.filterService.whereConditions(filter),
-    })
-    const totalPages = Math.ceil(this.productCount / this.perPage)
-    this.totalPages = totalPages !== 0 ? totalPages : 1
-
-    return {
-      data: await this.findAll(),
-      links: this.links(),
-      meta: await this.meta(),
-    }
-  }
-
-  products(params: {
+  findSpecific(params: {
     skip?: number
     take?: number
     cursor?: Prisma.ProductWhereUniqueInput
@@ -60,60 +37,71 @@ export class ProductsService {
     })
   }
 
-  async findAll(): Promise<Product[]> {
+  async findAll(
+    filter: ProductFilterTransformedDto = {},
+    perPage: number,
+    skip: number,
+  ): Promise<Product[]> {
     try {
-      const filteredProducts = await this.prisma.product.findMany({
-        where: this.filterService.whereConditions(this.filter ?? {}),
-        orderBy: this.filterService.orderByConditions(this.filter ?? {}),
-        take: this.perPage,
-        skip: this.skip,
+      return await this.prisma.product.findMany({
+        where: this.filterService.whereConditions(filter),
+        orderBy: this.filterService.orderByConditions(filter),
+        take: perPage,
+        skip,
       })
-      return filteredProducts
     } catch (err) {
       throw new BadRequestException(err)
     }
   }
 
-  links() {
+  links(totalPages: number, currentPage: number) {
     return {
       first: this.paginationService.createLink(1),
-      last: this.paginationService.createLink(this.totalPages),
+      last: this.paginationService.createLink(totalPages),
       next: this.paginationService.createLink(
-        this.currentPage < this.totalPages ? this.currentPage + 1 : null,
+        currentPage < totalPages ? currentPage + 1 : null,
       ),
       prev: this.paginationService.createLink(
-        this.currentPage > 1 ? this.currentPage - 1 : null,
+        currentPage > 1 ? currentPage - 1 : null,
       ),
     }
   }
 
-  async meta(): Promise<MetaDataDto> {
+  async meta(filter: ProductFilterTransformedDto = {}): Promise<MetaDataDto> {
     try {
-      const totalProduct = await this.prisma.product.findMany({
-        where: this.filterService.whereConditions(this.filter ?? {}),
-        select: { id: true },
-        take: this.perPage,
-        skip: this.skip,
-      })
+      const skip = filter.page ? (filter.page - 1) * this.perPage : 0
+      const currentPage = filter.page && filter.page > 0 ? filter.page : 1
+      const totalProducts = await this.count(filter)
+      const totalPages = Math.ceil(totalProducts / this.perPage) || 1
 
-      const from = Math.min(this.skip + 1, this.productCount)
-      const to = Math.min(this.skip + totalProduct.length, this.productCount)
+      const splicedProducts = await this.count(filter, this.perPage, skip)
+      const from = Math.min(skip + 1, totalProducts)
+      const to = Math.min(skip + splicedProducts, totalProducts)
 
       return {
         path: this.paginationService.url,
-        currentPage: this.currentPage,
+        currentPage,
+        total: totalProducts,
         perPage: this.perPage,
-        total: this.productCount,
-        lastPage: this.totalPages,
+        lastPage: totalPages,
         from,
         to,
-        links: this.paginationService.bootstrap(
-          this.currentPage,
-          this.totalPages,
-        ),
+        links: this.paginationService.bootstrap(currentPage, totalPages),
       }
     } catch (err) {
       throw new InternalServerErrorException(err)
     }
+  }
+
+  async count(
+    filter: ProductFilterTransformedDto,
+    take?: number,
+    skip?: number,
+  ) {
+    return await this.prisma.product.count({
+      where: this.filterService.whereConditions(filter),
+      take,
+      skip,
+    })
   }
 }
