@@ -11,7 +11,8 @@ model Product {
   price           Int
   discount        Int?
   amount          Int
-  discountedPrice Int?           @default(dbgenerated("\nCASE\n    WHEN (discount IS NULL) THEN NULL::integer\n    ELSE (price - COALESCE(discount, 0))\nEND")) @map("discounted_price")
+  discountedPrice Int?           @default(dbgenerated("\nCASE\n    WHEN (discount IS NULL) THEN NULL::double precision\n    ELSE ((price)::double precision - (floor(((discount * price))::double precision) / (100)::double precision))\nEND")) @map("discounted_price")
+  definedPrice   Int?           @default(dbgenerated("\nCASE\n    WHEN (discount IS NULL) THEN (price)::double precision\n    ELSE ((price)::double precision - (floor(((discount * price))::double precision) / (100)::double precision))\nEND")) @map("defined_price")
   cart            Cart[]
   reviews         Review[]
 

@@ -18,7 +18,12 @@ export class FilterService {
       ...(colors && { colors: { hasSome: colors } }),
       ...(style && { dressStyle: { equals: style } }),
       ...(size && { sizes: { hasSome: size } }),
-      ...(price && { price: { gte: price[0], lte: price[1] } }),
+      ...(price && {
+        definedPrice: {
+          gte: price[0],
+          lte: price[1] !== 500 ? price[1] : undefined,
+        },
+      }),
     }
   }
 
@@ -29,10 +34,10 @@ export class FilterService {
 
     return {
       ...(sort === 'name' && { name: 'asc' }),
-      ...(sort === 'price' && { price: 'asc' }),
+      ...(sort === 'price' && { definedPrice: 'asc' }),
       ...(sort === 'AVGrating' && { AVGrating: 'asc' }),
       ...(sort === '-name' && { name: 'desc' }),
-      ...(sort === '-price' && { price: 'desc' }),
+      ...(sort === '-price' && { definedPrice: 'desc' }),
       ...(sort === '-AVGrating' && { AVGrating: 'desc' }),
     }
   }
