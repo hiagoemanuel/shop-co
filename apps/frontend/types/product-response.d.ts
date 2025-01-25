@@ -13,7 +13,7 @@ export interface IProduct {
   id: string
   name: string
   description: string | null
-  AVGrating: number
+  AvgRating: number
   images: string[]
   dressStyle: 'casual' | 'formal' | 'party' | 'gym'
   type: 'tShirt' | 'short' | 'shirt' | 'hoodie' | 'jeans'
@@ -21,6 +21,7 @@ export interface IProduct {
   colors: ProductColorType[]
   price: number
   discount: number | null
+  discountedPrice: number | null
   amount: number
 }
 
@@ -39,12 +40,10 @@ export type ProductColorType =
   | 'beige'
   | 'black'
   | 'blue'
-  | 'brown'
   | 'cyan'
   | 'grey'
   | 'green'
-  | 'orange'
-  | 'purple'
+  | 'pink'
   | 'red'
   | 'white'
   | 'yellow'

@@ -15,18 +15,16 @@ export interface IProductsColors {
 }
 
 export const productsColors: IProductsColors[] = [
-  { name: 'beige', hex: '#D9B99B', arrow: 'black' },
-  { name: 'black', hex: '#000000' },
-  { name: 'blue', hex: '#0000FF' },
-  { name: 'brown', hex: '#964B00' },
-  { name: 'cyan', hex: '#00FFFF', arrow: 'black' },
-  { name: 'grey', hex: '#808080' },
   { name: 'green', hex: '#008000' },
-  { name: 'orange', hex: '#ffa500' },
-  { name: 'purple', hex: '#800080' },
   { name: 'red', hex: '#FF0000' },
-  { name: 'white', hex: '#FFFFFF', arrow: 'black' },
   { name: 'yellow', hex: '#FFFF00', arrow: 'black' },
+  { name: 'pink', hex: '#F506A4' },
+  { name: 'blue', hex: '#0000FF' },
+  { name: 'cyan', hex: '#00FFFF', arrow: 'black' },
+  { name: 'white', hex: '#FFFFFF', arrow: 'black' },
+  { name: 'beige', hex: '#D9B99B', arrow: 'black' },
+  { name: 'grey', hex: '#808080' },
+  { name: 'black', hex: '#000000' },
 ] as const
 
 export interface IProductsSizes {

@@ -5,8 +5,8 @@ import { Star } from './svgs/Star'
 import { HalfStar } from './svgs/HalfStar'
 
 export const ProductCard = (product: IProduct) => {
-  const fullStars = Math.floor(product.AVGrating)
-  const hasHalfStar = product.AVGrating % 1 >= 0.5
+  const fullStars = Math.floor(product.AvgRating)
+  const hasHalfStar = product.AvgRating % 1 >= 0.5
 
   return (
     <Link
@@ -38,17 +38,12 @@ export const ProductCard = (product: IProduct) => {
             {hasHalfStar && <HalfStar />}
           </div>
           <p className="md:text-sm inline text-xs text-black/60">
-            <span className="text-black">{product.AVGrating}</span>/5
+            <span className="text-black">{product.AvgRating}</span>/5
           </p>
         </div>
         <div className="flex gap-2">
           <p className="md:text-2xl text-xl font-bold">
-            $
-            {product.discount
-              ? Math.floor(
-                  product.price - (product.discount * product.price) / 100,
-                )
-              : product.price}
+            ${product.discountedPrice || product.price}
           </p>
           {product.discount && (
             <>

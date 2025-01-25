@@ -1,18 +1,19 @@
 model Product {
-  id          String         @id @default(uuid())
-  name        String
-  description String?        @db.VarChar(148)
-  AVGrating   Float          @default(0) @map("avg_rating")
-  images      String[]
-  dressStyle  DressStyleType @map("dress_style")
-  type        ProductType
-  sizes       SizesType[]
-  colors      ColorsType[]
-  price       Int
-  discount    Int?
-  amount      Int
-  reviews     Review[]
-  cart        Cart[]
+  id              String         @id @default(uuid())
+  name            String
+  description     String?        @db.VarChar(148)
+  AvgRating       Float          @default(0) @map("avg_rating")
+  images          String[]
+  dressStyle      DressStyleType @map("dress_style")
+  type            ProductType
+  sizes           SizesType[]
+  colors          ColorsType[]
+  price           Int
+  discount        Int?
+  amount          Int
+  discountedPrice Int?           @default(dbgenerated("\nCASE\n    WHEN (discount IS NULL) THEN NULL::integer\n    ELSE (price - COALESCE(discount, 0))\nEND")) @map("discounted_price")
+  cart            Cart[]
+  reviews         Review[]
 
   @@map("product")
 }
@@ -26,18 +27,16 @@ enum ProductType {
 }
 
 enum ColorsType {
-  beige
-  black
-  blue
-  brown
-  cyan
-  grey
   green
-  orange
-  purple
   red
-  white
   yellow
+  pink
+  blue
+  cyan
+  white
+  beige
+  grey
+  black
 }
 
 enum DressStyleType {

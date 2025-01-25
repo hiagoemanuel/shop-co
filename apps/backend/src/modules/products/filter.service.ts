@@ -25,7 +25,7 @@ export class FilterService {
   orderByConditions({
     sort,
   }: ProductFilterTransformedDto): Prisma.ProductOrderByWithAggregationInput {
-    if (!sort) return { AVGrating: 'desc' }
+    if (!sort) return { AvgRating: 'desc' }
 
     return {
       ...(sort === 'name' && { name: 'asc' }),

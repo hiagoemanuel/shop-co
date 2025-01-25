@@ -52,8 +52,8 @@ export class ProductsController {
   @Get('/t/top-selling')
   topSelling() {
     return this.productsService.findSpecific({
-      where: { AVGrating: { gte: 4.9 } },
-      orderBy: { AVGrating: 'asc' },
+      where: { AvgRating: { gte: 4.9 } },
+      orderBy: { AvgRating: 'asc' },
       take: 4,
     })
   }

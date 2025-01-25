@@ -8,9 +8,8 @@ model Review {
   rating               Float
   isVerified           Boolean  @default(false) @map("is_verified")
   postedOn             DateTime @default(now()) @map("posted_on")
-
-  product Product @relation(fields: [productId], references: [id])
-  user    User    @relation(fields: [userId], references: [id])
+  product              Product  @relation(fields: [productId], references: [id])
+  user                 User     @relation(fields: [userId], references: [id])
 
   @@map("review")
 }

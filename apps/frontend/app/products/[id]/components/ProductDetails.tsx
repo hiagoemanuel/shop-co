@@ -20,8 +20,8 @@ const formatString = (value: string): string => {
 
 export const ProductDetails = (product: IProduct) => {
   const [amountCart, setAmountCart] = useState(1)
-  const fullStars = Math.floor(product.AVGrating)
-  const hasHalfStar = product.AVGrating % 1 >= 0.5
+  const fullStars = Math.floor(product.AvgRating)
+  const hasHalfStar = product.AvgRating % 1 >= 0.5
 
   const handlerAmountInput = (operator: '+' | '-') => {
     if (operator === '+') {
@@ -45,17 +45,12 @@ export const ProductDetails = (product: IProduct) => {
             {hasHalfStar && <HalfStar />}
           </div>
           <p className="md:text-sm inline text-xs text-black/60">
-            <span className="text-black">{product.AVGrating}</span>/5
+            <span className="text-black">{product.AvgRating}</span>/5
           </p>
         </div>
         <div className="flex gap-2">
           <p className="sm:text-3xl text-2xl font-bold">
-            $
-            {product.discount
-              ? Math.floor(
-                  product.price - (product.discount * product.price) / 100,
-                )
-              : product.price}
+            ${product.discountedPrice || product.price}
           </p>
           {product.discount && (
             <>
