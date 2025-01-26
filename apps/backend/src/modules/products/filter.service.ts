@@ -35,10 +35,10 @@ export class FilterService {
     return {
       ...(sort === 'name' && { name: 'asc' }),
       ...(sort === 'price' && { definedPrice: 'asc' }),
-      ...(sort === 'AVGrating' && { AVGrating: 'asc' }),
+      ...(sort === 'AVGrating' && { AvgRating: 'asc' }),
       ...(sort === '-name' && { name: 'desc' }),
       ...(sort === '-price' && { definedPrice: 'desc' }),
-      ...(sort === '-AVGrating' && { AVGrating: 'desc' }),
+      ...(sort === '-AVGrating' && { AvgRating: 'desc' }),
     }
   }
 }

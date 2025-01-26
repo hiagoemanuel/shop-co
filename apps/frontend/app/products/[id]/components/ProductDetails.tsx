@@ -1,12 +1,9 @@
-'use client'
-
+import { AmountButton } from '@/components/AmountButton'
 import { HalfStar } from '@/components/svgs/HalfStar'
 import { Star } from '@/components/svgs/Star'
 import { ColorsCheckbox } from '@/components/ui/colors-checkbox'
 import { SizesCheckbox } from '@/components/ui/sizes-checkbox'
 import { IProduct } from '@/types/product-response'
-import { Minus, Plus } from 'lucide-react'
-import { useState } from 'react'
 
 const formatString = (value: string): string => {
   const formattedString = value.replace(/([a-z])([A-Z])/g, '$1-$2')
@@ -19,17 +16,8 @@ const formatString = (value: string): string => {
 }
 
 export const ProductDetails = (product: IProduct) => {
-  const [amountCart, setAmountCart] = useState(1)
   const fullStars = Math.floor(product.AvgRating)
   const hasHalfStar = product.AvgRating % 1 >= 0.5
-
-  const handlerAmountInput = (operator: '+' | '-') => {
-    if (operator === '+') {
-      if (amountCart < product.amount) setAmountCart(amountCart + 1)
-    } else {
-      if (amountCart > 1) setAmountCart(amountCart - 1)
-    }
-  }
 
   return (
     <div className="max-w-[36.875rem]">
@@ -101,34 +89,7 @@ export const ProductDetails = (product: IProduct) => {
         </div>
       </div>
       <div className="flex gap-3">
-        <div className="bg-cyan rounded-full overflow-hidden flex">
-          <button
-            className="py-3 px-4"
-            type="button"
-            onClick={() => handlerAmountInput('-')}
-          >
-            <Minus className="size-5" />
-          </button>
-          <input
-            className="reset-numeric-input text-center"
-            type="number"
-            value={amountCart}
-            onChange={(e) => {
-              const value = Number(e.target.value)
-              if (value > amountCart) handlerAmountInput('+')
-              if (value < amountCart) handlerAmountInput('-')
-            }}
-            min={1}
-            max={product.amount}
-          />
-          <button
-            className="py-3 px-4"
-            type="button"
-            onClick={() => handlerAmountInput('+')}
-          >
-            <Plus className="size-5" />
-          </button>
-        </div>
+        <AmountButton amount={product.amount} />
         <button
           className="sm:text-base py-3 grow rounded-full text-sm text-white font-medium bg-black"
           type="submit"
