@@ -3,13 +3,14 @@ import { Trash } from '@/components/svgs/Trash'
 import { ICartProducts } from '@/data/cart'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Fragment } from 'react'
 
 export const CartProdcuts = ({ products }: { products: ICartProducts[] }) => {
   return (
-    <div className="sm:max-h-[31rem] max-h-[26.5rem] overflow-y-scroll scrollbar-hide p-3 rounded-3xl border border-black/10">
+    <div className="sm:max-h-[31rem] w-full max-h-[26.5rem] overflow-y-scroll scrollbar-hide p-3 rounded-3xl border border-black/10">
       {products.map((p, idx) => (
-        <>
-          <div className="flex gap-4" key={idx}>
+        <Fragment key={idx}>
+          <div className="flex gap-4">
             <Link href={`/products/${p.id}`}>
               <Image
                 className="sm:size-[7.75rem] min-w-[6.25rem] size-[6.25rem] object-cover rounded-lg"
@@ -63,7 +64,7 @@ export const CartProdcuts = ({ products }: { products: ICartProducts[] }) => {
           {idx !== products.length - 1 && (
             <span className="block w-full h-px my-6 bg-black/10" />
           )}
-        </>
+        </Fragment>
       ))}
     </div>
   )

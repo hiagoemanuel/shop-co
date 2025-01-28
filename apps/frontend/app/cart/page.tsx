@@ -2,6 +2,7 @@ import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import cartProducts from '@/data/cart'
 import { CartProdcuts } from './components/CartProducts'
+import { Summary } from './components/Summary'
 
 export default async function Cart() {
   return (
@@ -22,11 +23,9 @@ export default async function Cart() {
           <h1 className="md:text-[2.5rem] mb-5 text-3xl font-bold font-integral-cf">
             Your Cart
           </h1>
-          <div className="flex flex-col gap-5">
+          <div className="min-[900px]:flex-row flex flex-col gap-5">
             <CartProdcuts products={cartProducts} />
-            <div className="p-5 rounded-3xl border border-black/10">
-              summary
-            </div>
+            <Summary />
           </div>
         </section>
       </div>
