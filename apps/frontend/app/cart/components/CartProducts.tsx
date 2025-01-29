@@ -7,9 +7,9 @@ import { Fragment } from 'react'
 
 export const CartProdcuts = ({ products }: { products: ICartProducts[] }) => {
   return (
-    <div className="sm:h-[31rem] w-full h-[26.5rem] overflow-hidden rounded-3xl border border-black/10">
+    <div className="sm:h-[32rem] w-full h-[26.5rem] overflow-hidden rounded-3xl border border-black/10">
       {products.length > 0 ? (
-        <div className="h-full p-3 overflow-y-scroll">
+        <div className="sm:px-6 sm:py-5 h-full p-3 overflow-y-scroll">
           {products.map((p, idx) => (
             <Fragment key={idx}>
               <div className="flex gap-4">

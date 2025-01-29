@@ -19,26 +19,43 @@ export const MenuList = () => {
           exit={{ opacity: 0 }}
         >
           <motion.menu
-            className="bg-white/30 backdrop-blur-3xl p-4 rounded-3xl shadow-[0px_0px_35px_50px] shadow-white/30"
-            initial={{ y: '10vh' }}
-            animate={{ y: 0 }}
-            exit={{ y: '-10vh' }}
+            className="w-full bg-white backdrop-blur-3xl p-4 shadow-sm shadow-black/60"
+            initial={{ x: '-10vh' }}
+            animate={{ x: 0 }}
+            exit={{ x: '10vh' }}
+            transition={{ type: 'keyframes' }}
           >
             <nav className="flex flex-col items-center gap-6 text-3xl">
-              <Link className="hover:underline" href="/products">
+              <Link
+                className="hover:underline"
+                href="/products"
+                onClick={() => setMenuIsOpen(!menuIsOpen)}
+              >
                 Shop
               </Link>
-              <Link className="hover:underline" href="/products">
+              <Link
+                className="hover:underline"
+                href="/products"
+                onClick={() => setMenuIsOpen(!menuIsOpen)}
+              >
                 On Sale
               </Link>
-              <Link className="hover:underline" href="/products">
+              <Link
+                className="hover:underline"
+                href="/products"
+                onClick={() => setMenuIsOpen(!menuIsOpen)}
+              >
                 New Arrivals
               </Link>
-              <Link className="hover:underline" href="/products">
+              <Link
+                className="hover:underline"
+                href="/products"
+                onClick={() => setMenuIsOpen(!menuIsOpen)}
+              >
                 Brands
               </Link>
               <button
-                className="w-full p-4 bg-black text-white rounded-full"
+                className="py-4 px-10 bg-black text-white rounded-full"
                 type="button"
                 onClick={() => setMenuIsOpen(!menuIsOpen)}
               >
