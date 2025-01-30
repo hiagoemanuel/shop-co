@@ -8,6 +8,7 @@ model Account {
   token_type        String?
   scope             String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cart              Cart[]
 
   @@unique([provider, providerAccountId])
   @@map("account")
@@ -19,7 +20,6 @@ model User {
   email    String?   @unique
   image    String?
   accounts Account[]
-  cart     Cart?
   reviews  Review[]
 
   @@map("user")
