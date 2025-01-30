@@ -6,7 +6,7 @@ export default async function Account() {
   const session = await getServerSession()
   return (
     <main className="min-h-96 flex justify-center items-center">
-      <div className="flex flex-col gap-3 py-8 px-4 rounded-3xl border border-black/10">
+      <div className="min-w-72 flex flex-col gap-3 py-8 px-4 rounded-3xl border border-black/10">
         <div className="flex justify-center items-end gap-1">
           <h1 className="sm:text-2xl text-xl font-integral-cf text-center">
             SHOP.CO

@@ -1,3 +1,4 @@
+import api from '@/lib/axios'
 import NextAuth from 'next-auth'
 
 import GitHubProvider from 'next-auth/providers/github'
@@ -18,6 +19,12 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
+  callbacks: {
+    signIn: async ({ user, account }) => {
+      await api.post('/users', { user, account })
+      return true
+    },
+  },
 })
 
 export { handler as GET, handler as POST }
