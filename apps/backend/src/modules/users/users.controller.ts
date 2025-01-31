@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post } from '@nestjs/common'
 import { CreateUserDto } from './dto/users.controller.dto'
 import { UsersService } from './users.service'
 import { AccountsService } from './accounts.service'
@@ -10,10 +10,14 @@ export class UsersController {
     private accountsService: AccountsService,
   ) {}
 
+  @Get(':id')
+  async find(@Param('id') id: string) {
+    return await this.usersService.findOne(id)
+  }
+
   @Post()
-  @HttpCode(201)
   async create(@Body() { account, user }: CreateUserDto) {
-    const userExists = await this.usersService.findOne(user.email)
+    const userExists = await this.usersService.findOne(user.id)
 
     if (userExists) {
       const accountExists = await this.accountsService.findOne(

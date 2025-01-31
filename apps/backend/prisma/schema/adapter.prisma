@@ -8,19 +8,20 @@ model Account {
   token_type        String?
   scope             String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  cart              Cart[]
 
   @@unique([provider, providerAccountId])
   @@map("account")
 }
 
 model User {
-  id       String    @id @default(cuid())
-  name     String?
-  email    String?   @unique
-  image    String?
-  accounts Account[]
-  reviews  Review[]
+  id         String    @id @default(cuid())
+  nextAuthId String    @unique @map("next_auth_id")
+  name       String?
+  email      String?
+  image      String?
+  accounts   Account[]
+  reviews    Review[]
+  cart       Cart[]
 
   @@map("user")
 }

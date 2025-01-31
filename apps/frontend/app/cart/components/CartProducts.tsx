@@ -1,6 +1,6 @@
 import { AmountButton } from '@/components/AmountButton'
 import { Trash } from '@/components/svgs/Trash'
-import { ICartProducts } from '@/data/cart'
+import { ICartProducts } from '@/types/cart'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Fragment } from 'react'
@@ -11,9 +11,9 @@ export const CartProdcuts = ({ products }: { products: ICartProducts[] }) => {
       {products.length > 0 ? (
         <div className="sm:px-6 sm:py-5 h-full p-3 overflow-y-scroll">
           {products.map((p, idx) => (
-            <Fragment key={idx}>
+            <Fragment key={p.id}>
               <div className="flex gap-4">
-                <Link href={`/products/${p.id}`}>
+                <Link href={`/products/${p.productId}`}>
                   <Image
                     className="sm:size-[7.75rem] min-w-[6.25rem] size-[6.25rem] object-cover rounded-lg"
                     src={p.image}
@@ -30,7 +30,7 @@ export const CartProdcuts = ({ products }: { products: ICartProducts[] }) => {
                         className="sm:text-xl grow w-40 text-base font-bold truncate"
                         title={p.name}
                       >
-                        <Link className="" href={`/products/${p.id}`}>
+                        <Link className="" href={`/products/${p.productId}`}>
                           {p.name}
                         </Link>
                       </h1>

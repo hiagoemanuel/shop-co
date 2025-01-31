@@ -1,11 +1,11 @@
 model Cart {
   id        String     @id @default(cuid())
-  accountId String
-  productId String
+  userId    String     @map("user_id")
+  productId String     @map("product_id")
   amount    Int
   color     ColorsType
   size      SizesType
-  account   Account    @relation(fields: [accountId], references: [id])
+  user      User       @relation(fields: [userId], references: [id])
   product   Product    @relation(fields: [productId], references: [id])
 
   @@map("cart")

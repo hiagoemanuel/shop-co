@@ -8,15 +8,21 @@ import {
 } from '@nestjs/common'
 import { CartsService } from './carts.service'
 import { Cart, ColorsType, SizesType } from '@prisma/client'
+import { FindCartDto } from './dto/find-cart.dto'
+import { UsersService } from '../users/users.service'
 
 @Controller('carts')
 export class CartsController {
-  constructor(private cartsService: CartsService) {}
+  constructor(
+    private cartsService: CartsService,
+    private userService: UsersService,
+  ) {}
 
-  @Get(':accontId')
-  async find(@Param('accontId') accountId: string): Promise<Cart[]> {
+  @Get(':nextAuthId')
+  async find(@Param('nextAuthId') nextAuthId: string): Promise<FindCartDto[]> {
     try {
-      const cart = await this.cartsService.find(accountId)
+      const user = await this.userService.findOne(nextAuthId)
+      const cart = await this.cartsService.find(user.id)
       if (!cart) throw 'Cart not found'
       return cart
     } catch (err) {
@@ -24,14 +30,14 @@ export class CartsController {
     }
   }
 
-  @Post(':accountId/:productId')
+  @Post(':userId/:productId')
   async create(
-    @Param() params: { accountId: string; productId: string },
+    @Param() params: { userId: string; productId: string },
     @Body() data: { amount: number; color: ColorsType; size: SizesType },
   ): Promise<Cart> {
     try {
       return await this.cartsService.create({
-        accountId: params.accountId,
+        userId: params.userId,
         productId: params.productId,
         ...data,
       })

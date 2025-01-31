@@ -1,10 +1,18 @@
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import cartProducts from '@/data/cart'
 import { CartProdcuts } from './components/CartProducts'
 import { Summary } from './components/Summary'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/next-auth'
+import api from '@/lib/axios'
+import { ICartProducts } from '@/types/cart'
 
 export default async function Cart() {
+  const session = await getServerSession(authOptions)
+  const { data: cart } = await api.get<ICartProducts[]>(
+    `/carts/${session?.user.id}`,
+  )
+
   return (
     <main className="md:mt-6 mt-5">
       <div className="2xl:px-0 max-w-[1440px] mx-auto px-4">
@@ -24,7 +32,7 @@ export default async function Cart() {
             Your Cart
           </h1>
           <div className="min-[900px]:flex-row flex flex-col gap-5">
-            <CartProdcuts products={cartProducts} />
+            <CartProdcuts products={cart} />
             <Summary />
           </div>
         </section>
