@@ -57,7 +57,7 @@ export const CartProdcuts = ({ products }: { products: ICartProducts[] }) => {
                     </h2>
                     <AmountButton
                       amount={p.amount}
-                      initialValue={p.amount}
+                      defaultValue={p.amount}
                       size="small"
                     />
                   </div>

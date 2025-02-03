@@ -22,6 +22,7 @@ export interface IProduct {
   price: number
   discount: number | null
   discountedPrice: number | null
+  definedPrice: number
   amount: number
 }
 

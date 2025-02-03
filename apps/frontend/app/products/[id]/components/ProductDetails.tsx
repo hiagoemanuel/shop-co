@@ -1,10 +1,16 @@
+'use client'
+
 import { AmountButton } from '@/components/AmountButton'
 import { HalfStar } from '@/components/svgs/HalfStar'
 import { Star } from '@/components/svgs/Star'
 import { ColorsRadioGroupItem } from '@/components/ui/colors-radio'
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { RadioGroup } from '@/components/ui/radio-group'
 import { SizeRadioGroupItem } from '@/components/ui/sizes-radio'
 import { IProduct } from '@/types/product-response'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 const formatString = (value: string): string => {
   const formattedString = value.replace(/([a-z])([A-Z])/g, '$1-$2')
@@ -16,9 +22,27 @@ const formatString = (value: string): string => {
   return formattedString.charAt(0).toUpperCase() + formattedString.slice(1)
 }
 
+const formSchema = z.object({
+  color: z.string(),
+  size: z.string(),
+  amount: z.number(),
+})
+
 export const ProductDetails = (product: IProduct) => {
   const fullStars = Math.floor(product.AvgRating)
   const hasHalfStar = product.AvgRating % 1 >= 0.5
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      color: product.colors[0],
+      size: product.sizes[0],
+      amount: 1,
+    },
+  })
+
+  function addToCart(values: z.infer<typeof formSchema>) {
+    alert(JSON.stringify(values))
+  }
 
   return (
     <div className="max-w-[36.875rem]">
@@ -39,7 +63,7 @@ export const ProductDetails = (product: IProduct) => {
         </div>
         <div className="flex gap-2">
           <p className="sm:text-3xl text-2xl font-bold">
-            ${product.discountedPrice || product.price}
+            ${product.definedPrice}
           </p>
           {product.discount && (
             <>
@@ -60,45 +84,90 @@ export const ProductDetails = (product: IProduct) => {
           {product.description}
         </p>
       )}
-      <div
-        className={`${!product.description && 'mt-5'} pb-6 border-b border-black/10`}
-      >
-        <h4 className="sm:text-base text-sm text-black/60 mb-4">
-          Select Colors
-        </h4>
-        <RadioGroup
-          className="flex flex-wrap gap-3"
-          defaultValue={product.colors[0]}
-        >
-          {product.colors.map((color) => (
-            <ColorsRadioGroupItem value={color} hex={color} key={color} />
-          ))}
-        </RadioGroup>
-      </div>
-      <div className="mb-6 py-6 border-b border-black/10">
-        <h4 className="sm:text-base text-sm text-black/60 mb-4">Choose Size</h4>
-        <RadioGroup
-          className="flex flex-wrap gap-3"
-          defaultValue={product.sizes[0]}
-        >
-          {product.sizes.map((size) => (
-            <SizeRadioGroupItem
-              label={formatString(size)}
-              value={size}
-              key={size}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(addToCart)}>
+          <div
+            className={`${!product.description && 'mt-5'} pb-6 border-b border-black/10`}
+          >
+            <h4 className="sm:text-base text-sm text-black/60 mb-4">
+              Select Colors
+            </h4>
+            <FormField
+              control={form.control}
+              name="color"
+              render={({ field }) => (
+                <FormItem>
+                  <RadioGroup
+                    className="flex flex-wrap gap-3"
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    {product.colors.map((color) => (
+                      <FormItem key={color}>
+                        <FormControl>
+                          <ColorsRadioGroupItem value={color} hex={color} />
+                        </FormControl>
+                      </FormItem>
+                    ))}
+                  </RadioGroup>
+                </FormItem>
+              )}
             />
-          ))}
-        </RadioGroup>
-      </div>
-      <div className="flex gap-3">
-        <AmountButton amount={product.amount} />
-        <button
-          className="sm:text-base py-3 grow rounded-full text-sm text-white font-medium bg-black"
-          type="submit"
-        >
-          Add to Cart
-        </button>
-      </div>
+          </div>
+          <div className="mb-6 py-6 border-b border-black/10">
+            <h4 className="sm:text-base text-sm text-black/60 mb-4">
+              Choose Size
+            </h4>
+            <FormField
+              control={form.control}
+              name="size"
+              render={({ field }) => (
+                <FormItem>
+                  <RadioGroup
+                    className="flex flex-wrap gap-3"
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    {product.sizes.map((size) => (
+                      <FormItem key={size}>
+                        <FormControl>
+                          <SizeRadioGroupItem
+                            label={formatString(size)}
+                            value={size}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    ))}
+                  </RadioGroup>
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="flex gap-3">
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <AmountButton
+                      defaultValue={field.value}
+                      onValueChange={field.onChange}
+                      amount={product.amount}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <button
+              className="sm:text-base py-3 grow rounded-full text-sm text-white font-medium bg-black"
+              type="submit"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </form>
+      </Form>
     </div>
   )
 }

@@ -1,26 +1,31 @@
 'use client'
 
 import { Minus, Plus } from 'lucide-react'
-import { useState } from 'react'
+import { useControllableState } from '@radix-ui/react-use-controllable-state'
 
 type AmounButtonProps = {
   amount: number
-  initialValue?: number
+  defaultValue?: number
+  onValueChange?: (value: number) => void
   size?: 'small' | 'medium'
 }
 
 export const AmountButton = ({
   amount,
-  initialValue,
+  defaultValue,
+  onValueChange,
   size = 'medium',
 }: AmounButtonProps) => {
-  const [amountCart, setAmountCart] = useState(initialValue || 1)
+  const [value = 1, setValue] = useControllableState<number>({
+    defaultProp: defaultValue || 1,
+    onChange: onValueChange,
+  })
 
   const handlerAmountInput = (operator: '+' | '-') => {
     if (operator === '+') {
-      if (amountCart < amount) setAmountCart(amountCart + 1)
+      if (value < amount) setValue(value + 1)
     } else {
-      if (amountCart > 1) setAmountCart(amountCart - 1)
+      if (value > 1) setValue(value - 1)
     }
   }
 
@@ -38,11 +43,11 @@ export const AmountButton = ({
       <input
         className="reset-numeric-input text-center"
         type="number"
-        value={amountCart}
+        value={value}
         onChange={(e) => {
-          const value = Number(e.target.value)
-          if (value > amountCart) handlerAmountInput('+')
-          if (value < amountCart) handlerAmountInput('-')
+          const inputValue = Number(e.target.value)
+          if (inputValue > value) handlerAmountInput('+')
+          if (inputValue < value) handlerAmountInput('-')
         }}
         min={1}
         max={amount}
