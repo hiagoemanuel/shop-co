@@ -32,7 +32,7 @@ export default async function Cart() {
             Your Cart
           </h1>
           <div className="min-[900px]:flex-row flex flex-col gap-5">
-            <CartProdcuts products={cart} />
+            <CartProdcuts productsList={cart} />
             <Summary />
           </div>
         </section>

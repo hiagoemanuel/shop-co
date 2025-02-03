@@ -41,6 +41,12 @@ export class CartsService {
   async create(cart: CreateCartDto): Promise<Cart> {
     return await this.prisma.cart.create({ data: { ...cart } })
   }
-  delete() {}
+
+  async delete(userId: string, productId: string) {
+    return await this.prisma.cart.deleteMany({
+      where: { userId, id: productId },
+    })
+  }
+
   update() {}
 }

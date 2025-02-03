@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -40,6 +41,15 @@ export class CartsController {
         productId: params.productId,
         ...data,
       })
+    } catch (err) {
+      throw new BadRequestException(err)
+    }
+  }
+
+  @Delete(':userId/:productId')
+  async delete(@Param() params: { userId: string; productId: string }) {
+    try {
+      return this.cartsService.delete(params.userId, params.productId)
     } catch (err) {
       throw new BadRequestException(err)
     }

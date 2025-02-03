@@ -3,10 +3,12 @@ import { CartsService } from './carts.service'
 import { PrismaService } from 'src/services/prisma.service'
 import { CreateCartDto } from './dto/create-cart.dto'
 
-const prismaMock = { cart: { findMany: jest.fn(), create: jest.fn() } }
+const prismaMock = {
+  cart: { findMany: jest.fn(), create: jest.fn(), deleteMany: jest.fn() },
+}
 const seedCart = (id: number) => ({
   id: 'cart_id_' + id,
-  accountId: 'account_id_' + id,
+  userId: 'user_id_' + id,
   productId: 'product_id_' + id,
 })
 
@@ -37,7 +39,7 @@ describe('CartsService', () => {
 
   it('should create new product in the cart', () => {
     const createCart: CreateCartDto = {
-      accountId: 'account_id_123',
+      userId: 'account_id_123',
       productId: 'product_id_123',
       amount: 4,
       color: 'white',
@@ -53,6 +55,15 @@ describe('CartsService', () => {
     expect(product).resolves.toBe(result)
   })
 
-  // it('should delete a product from the cart', () => {})
+  // it('should delete a product from the cart', () => {
+  //   const product = seedCart(123)
+
+  //   prismaMock.cart.deleteMany.mockResolvedValueOnce(product)
+
+  //   const deletedProduct = cartsService.delete('user_id_123', 'product_id_123')
+
+  //   expect(deletedProduct).resolves.toBe(product)
+  // })
+
   // it('shold update a product in the cart', () => {})
 })

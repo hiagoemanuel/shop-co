@@ -1,11 +1,34 @@
+'use client'
+
 import { AmountButton } from '@/components/AmountButton'
 import { Trash } from '@/components/svgs/Trash'
+import api from '@/lib/axios'
 import { ICartProducts } from '@/types/cart'
+import { getSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
-export const CartProdcuts = ({ products }: { products: ICartProducts[] }) => {
+export const CartProdcuts = ({
+  productsList,
+}: {
+  productsList: ICartProducts[]
+}) => {
+  const [products, setProducts] = useState<ICartProducts[]>(productsList)
+
+  const deleteFromCart = async (productId: string) => {
+    const session = await getSession()
+    const { status } = await api.delete(
+      `/carts/${session?.user.id}/${productId}`,
+    )
+    if (status === 200) {
+      const { data: newProductsList } = await api.get<ICartProducts[]>(
+        `/carts/${session?.user.id}`,
+      )
+      setProducts(newProductsList)
+    }
+  }
+
   return (
     <div className="sm:h-[32rem] w-full h-[26.5rem] overflow-hidden rounded-3xl border border-black/10">
       {products.length > 0 ? (
@@ -34,7 +57,10 @@ export const CartProdcuts = ({ products }: { products: ICartProducts[] }) => {
                           {p.name}
                         </Link>
                       </h1>
-                      <button type="button">
+                      <button
+                        type="button"
+                        onClick={() => deleteFromCart(p.id)}
+                      >
                         <Trash className="sm:size-6 size-4" />
                       </button>
                     </div>
