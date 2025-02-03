@@ -2,7 +2,10 @@ import { AmountButton } from '@/components/AmountButton'
 import { HalfStar } from '@/components/svgs/HalfStar'
 import { Star } from '@/components/svgs/Star'
 import { ColorsCheckbox } from '@/components/ui/colors-checkbox'
+import { ColorsRadioGroupItem } from '@/components/ui/colors-radio'
+import { RadioGroup } from '@/components/ui/radio-group'
 import { SizesCheckbox } from '@/components/ui/sizes-checkbox'
+import { SizeRadioGroupItem } from '@/components/ui/sizes-radio'
 import { IProduct } from '@/types/product-response'
 
 const formatString = (value: string): string => {
@@ -65,28 +68,29 @@ export const ProductDetails = (product: IProduct) => {
         <h4 className="sm:text-base text-sm text-black/60 mb-4">
           Select Colors
         </h4>
-        <div className="flex flex-wrap gap-3">
-          {product.colors.map((color, idx) => (
-            <ColorsCheckbox
-              key={color}
-              hex={color}
-              arrowColor={color === 'white' ? 'black' : undefined}
-              defaultChecked={idx === 0}
-            />
+        <RadioGroup
+          className="flex flex-wrap gap-3"
+          defaultValue={product.colors[0]}
+        >
+          {product.colors.map((color) => (
+            <ColorsRadioGroupItem value={color} hex={color} key={color} />
           ))}
-        </div>
+        </RadioGroup>
       </div>
       <div className="mb-6 py-6 border-b border-black/10">
         <h4 className="sm:text-base text-sm text-black/60 mb-4">Choose Size</h4>
-        <div className="flex flex-wrap gap-3">
-          {product.sizes.map((size, idx) => (
-            <SizesCheckbox
-              key={size}
+        <RadioGroup
+          className="flex flex-wrap gap-3"
+          defaultValue={product.sizes[0]}
+        >
+          {product.sizes.map((size) => (
+            <SizeRadioGroupItem
               label={formatString(size)}
-              defaultChecked={idx === 0}
+              value={size}
+              key={size}
             />
           ))}
-        </div>
+        </RadioGroup>
       </div>
       <div className="flex gap-3">
         <AmountButton amount={product.amount} />
