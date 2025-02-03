@@ -1,10 +1,8 @@
 import { AmountButton } from '@/components/AmountButton'
 import { HalfStar } from '@/components/svgs/HalfStar'
 import { Star } from '@/components/svgs/Star'
-import { ColorsCheckbox } from '@/components/ui/colors-checkbox'
 import { ColorsRadioGroupItem } from '@/components/ui/colors-radio'
 import { RadioGroup } from '@/components/ui/radio-group'
-import { SizesCheckbox } from '@/components/ui/sizes-checkbox'
 import { SizeRadioGroupItem } from '@/components/ui/sizes-radio'
 import { IProduct } from '@/types/product-response'
 
