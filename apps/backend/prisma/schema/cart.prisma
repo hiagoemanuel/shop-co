@@ -5,7 +5,7 @@ model Cart {
   amount    Int
   color     ColorsType
   size      SizesType
-  user      User       @relation(fields: [userId], references: [id])
+  user      User       @relation(fields: [userId], references: [nextAuthId])
   product   Product    @relation(fields: [productId], references: [id])
 
   @@map("cart")

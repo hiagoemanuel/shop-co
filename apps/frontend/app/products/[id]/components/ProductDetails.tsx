@@ -7,8 +7,10 @@ import { ColorsRadioGroupItem } from '@/components/ui/colors-radio'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { RadioGroup } from '@/components/ui/radio-group'
 import { SizeRadioGroupItem } from '@/components/ui/sizes-radio'
+import api from '@/lib/axios'
 import { IProduct } from '@/types/product-response'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { getSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -40,8 +42,9 @@ export const ProductDetails = (product: IProduct) => {
     },
   })
 
-  function addToCart(values: z.infer<typeof formSchema>) {
-    alert(JSON.stringify(values))
+  const addToCart = async (values: z.infer<typeof formSchema>) => {
+    const session = await getSession()
+    await api.post(`/carts/${session?.user.id}/${product.id}`, { ...values })
   }
 
   return (

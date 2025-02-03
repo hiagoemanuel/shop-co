@@ -21,8 +21,7 @@ export class CartsController {
   @Get(':nextAuthId')
   async find(@Param('nextAuthId') nextAuthId: string): Promise<FindCartDto[]> {
     try {
-      const user = await this.userService.findOne(nextAuthId)
-      const cart = await this.cartsService.find(user.id)
+      const cart = await this.cartsService.find(nextAuthId)
       if (!cart) throw 'Cart not found'
       return cart
     } catch (err) {
