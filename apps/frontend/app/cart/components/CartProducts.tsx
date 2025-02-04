@@ -101,10 +101,10 @@ export const CartProdcuts = ({
             You have no products in your cart 😢
           </h1>
           <Link
-            className="sm:text-base sm:py-3 py-2 px-10 flex justify-center items-center gap-3 bg-black text-white rounded-full text-sm font-medium"
+            className="sm:text-base sm:py-3 py-2 px-10 flex justify-center items-center gap-3 border border-black/15 text-black rounded-full text-sm font-medium transition-colors hover:text-white hover:bg-black"
             href="/products"
           >
-            Go shop
+            Go shopping
             <span className="text-2xl">🥳</span>
           </Link>
         </div>
