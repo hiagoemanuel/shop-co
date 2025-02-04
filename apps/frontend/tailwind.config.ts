@@ -45,8 +45,13 @@ export default {
             height: '0',
           },
         },
+        'wave': {
+          from: { left: '-100%' },
+          to: { left: '100%' }
+        }
       },
       animation: {
+        'wave': 'wave 1.5s infinite',
         'to-left': 'translate-to-left 10s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
