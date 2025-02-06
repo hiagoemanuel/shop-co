@@ -2,6 +2,7 @@
 
 import { AmountButton } from '@/components/AmountButton'
 import { Trash } from '@/components/svgs/Trash'
+import { useToast } from '@/hooks/use-toast'
 import api from '@/lib/axios'
 import { ICartProducts } from '@/types/cart'
 import { getSession } from 'next-auth/react'
@@ -15,17 +16,31 @@ export const CartProdcuts = ({
   productsList: ICartProducts[]
 }) => {
   const [products, setProducts] = useState<ICartProducts[]>(productsList)
+  const { toast } = useToast()
 
   const deleteFromCart = async (productId: string) => {
-    const session = await getSession()
-    const { status } = await api.delete(
-      `/carts/${session?.user.id}/${productId}`,
-    )
-    if (status === 200) {
-      const { data: newProductsList } = await api.get<ICartProducts[]>(
-        `/carts/${session?.user.id}`,
+    try {
+      const session = await getSession()
+      const { status } = await api.delete(
+        `/carts/${session?.user.id}/${productId}`,
       )
-      setProducts(newProductsList)
+      if (status === 200) {
+        const { data: newProductsList } = await api.get<ICartProducts[]>(
+          `/carts/${session?.user.id}`,
+        )
+        setProducts(newProductsList)
+        toast({
+          title: 'Product removed 😢',
+          variant: 'destructive',
+        })
+      } else {
+        throw new Error()
+      }
+    } catch {
+      toast({
+        title: 'Something went wrong, try again...',
+        variant: 'destructive',
+      })
     }
   }
 

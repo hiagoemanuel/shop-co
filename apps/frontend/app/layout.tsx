@@ -5,6 +5,7 @@ import { MenuListProvider } from '@/contexts/MenuListContext'
 import { Footer } from '@/components/Footer'
 import './globals.css'
 import { Suspense } from 'react'
+import { Toaster } from '@/components/ui/toaster'
 
 const satosho = localFont({
   src: './fonts/satoshi.woff2',
@@ -36,6 +37,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </Suspense>
+        <Toaster />
       </body>
     </html>
   )

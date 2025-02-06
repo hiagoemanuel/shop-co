@@ -7,6 +7,7 @@ import { ColorsRadioGroupItem } from '@/components/ui/colors-radio'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { RadioGroup } from '@/components/ui/radio-group'
 import { SizeRadioGroupItem } from '@/components/ui/sizes-radio'
+import { useToast } from '@/hooks/use-toast'
 import api from '@/lib/axios'
 import { IProduct } from '@/types/product-response'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -31,6 +32,7 @@ const formSchema = z.object({
 })
 
 export const ProductDetails = (product: IProduct) => {
+  const { toast } = useToast()
   const fullStars = Math.floor(product.AvgRating)
   const hasHalfStar = product.AvgRating % 1 >= 0.5
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,7 +46,26 @@ export const ProductDetails = (product: IProduct) => {
 
   const addToCart = async (values: z.infer<typeof formSchema>) => {
     const session = await getSession()
-    await api.post(`/carts/${session?.user.id}/${product.id}`, { ...values })
+    try {
+      const { status } = await api.post(
+        `/carts/${session?.user.id}/${product.id}`,
+        { ...values },
+      )
+
+      if (status === 201) {
+        toast({
+          title: 'Congratulations 😁',
+          description: 'Your product has added to your cart.',
+        })
+      } else {
+        throw new Error()
+      }
+    } catch {
+      toast({
+        title: 'Something went wrong, try again...',
+        variant: 'destructive',
+      })
+    }
   }
 
   return (
