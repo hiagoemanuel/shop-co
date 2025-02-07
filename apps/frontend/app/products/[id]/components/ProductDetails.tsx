@@ -11,7 +11,9 @@ import { useToast } from '@/hooks/use-toast'
 import api from '@/lib/axios'
 import { IProduct } from '@/types/product-response'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AxiosError, isAxiosError } from 'axios'
 import { getSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -32,6 +34,7 @@ const formSchema = z.object({
 })
 
 export const ProductDetails = (product: IProduct) => {
+  const { replace } = useRouter()
   const { toast } = useToast()
   const fullStars = Math.floor(product.AvgRating)
   const hasHalfStar = product.AvgRating % 1 >= 0.5
@@ -60,11 +63,20 @@ export const ProductDetails = (product: IProduct) => {
       } else {
         throw new Error()
       }
-    } catch {
-      toast({
-        title: 'Something went wrong, try again...',
-        variant: 'destructive',
-      })
+    } catch (err) {
+      if (isAxiosError<AxiosError>(err) && err.status === 400) {
+        replace('/login')
+        toast({
+          title: 'You need to be logged',
+          description: 'To add a product to a cart, you first need a cart.',
+          variant: 'destructive',
+        })
+      } else {
+        toast({
+          title: 'Something went wrong, try again...',
+          variant: 'destructive',
+        })
+      }
     }
   }
 
