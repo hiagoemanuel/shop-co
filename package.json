@@ -4,16 +4,12 @@
   "author": "<hiago emanuel>",
   "packageManager": "pnpm@9.15.0",
   "scripts": {
-    "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix"
   },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
-    "eslint": "^9.17.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "globals": "^15.14.0",
-    "turbo": "^2.3.3",
-    "typescript-eslint": "^8.19.0"
+    "turbo": "^2.3.3"
   }
 }

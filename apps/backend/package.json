@@ -7,8 +7,6 @@
     "dev:debug": "nest start --debug --watch",
     "dev:prod": "node dist/main",
     "db:generate": "prisma generate",
-    "lint": "cd ../ && pnpm lint ./backend",
-    "lint:fix": "cd ../ && pnpm lint ./backend --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
