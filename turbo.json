@@ -5,7 +5,16 @@
     "lint:fix": { },
     "build": {
       "dependsOn": ["^build", "db:generate"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "inputs": [".env"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "NEXTAUTH_URL",
+        "NEXTAUTH_SECRET",
+        "GITHUB_ID",
+        "GITHUB_SECRET",
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET"
+      ]
     },
     "dev": {
       "dependsOn": ["^dev","db:generate"],
