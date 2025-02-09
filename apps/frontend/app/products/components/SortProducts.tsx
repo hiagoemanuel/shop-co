@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/select'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-export const SortProducts = ({ sort }: { sort: string }) => {
+export const SortProducts = ({ sort }: { sort?: string }) => {
   const pathname = usePathname()
   const params = useSearchParams()
   const { replace } = useRouter()

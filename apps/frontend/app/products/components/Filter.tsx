@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SyntheticEvent } from 'react'
+import Link from 'next/link'
 import { z } from 'zod'
 
 import {
@@ -250,13 +251,13 @@ export const Filter = () => {
               <AccordionContent>
                 <div className="flex flex-col gap-5">
                   {productsDressStyle.map((prod) => (
-                    <a
+                    <Link
                       className="text-base text-black/60 hover:text-black flex justify-between items-center"
                       href={`${prod.urlValue}`}
                       key={prod.type}
                     >
                       {prod.type} <ChevronRight width="1rem" />
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </AccordionContent>
